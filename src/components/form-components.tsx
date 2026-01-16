@@ -1,6 +1,6 @@
 import { useStore } from '@tanstack/react-form'
 
-import { useFieldContext, useFormContext } from '@/hooks/demo.form-context'
+import { useFieldContext, useFormContext } from '@/hooks/use-form-context'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -9,13 +9,14 @@ import * as ShadcnSelect from '@/components/ui/select'
 import { Slider as ShadcnSlider } from '@/components/ui/slider'
 import { Switch as ShadcnSwitch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
+import { CircleAlert } from "lucide-react"
 
 export function SubscribeButton({ label }: { label: string }) {
   const form = useFormContext()
   return (
     <form.Subscribe selector={(state) => state.isSubmitting}>
       {(isSubmitting) => (
-        <Button type="submit" disabled={isSubmitting}>
+        <Button type="submit" disabled={isSubmitting} className='w-full'>
           {label}
         </Button>
       )}
@@ -33,8 +34,9 @@ function ErrorMessages({
       {errors.map((error) => (
         <div
           key={typeof error === 'string' ? error : error.message}
-          className="text-red-500 mt-1 font-bold"
+          className="p-xs text-destructive flex items-center gap-1"
         >
+          <CircleAlert className=' stroke-destructive size-3.5' />
           {typeof error === 'string' ? error : error.message}
         </div>
       ))}
@@ -46,22 +48,24 @@ export function TextField({
   label,
   placeholder,
 }: {
-  label: string
+  label?: string
   placeholder?: string
 }) {
   const field = useFieldContext<string>()
   const errors = useStore(field.store, (state) => state.meta.errors)
 
   return (
-    <div>
-      <Label htmlFor={label} className="mb-2 text-xl font-bold">
+    <div className='space-y-1.5'>
+      {label && <Label htmlFor={label}>
         {label}
-      </Label>
+      </Label>}
       <Input
         value={field.state.value}
         placeholder={placeholder}
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(e.target.value)}
+        aria-invalid={errors.length > 0 ? 'true' : undefined}
+
       />
       {field.state.meta.isTouched && <ErrorMessages errors={errors} />}
     </div>
