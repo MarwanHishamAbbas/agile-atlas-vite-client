@@ -1,5 +1,5 @@
 import { useStore } from '@tanstack/react-form'
-
+import { type FC } from 'react'
 import { useFieldContext, useFormContext } from '@/hooks/use-form-context'
 
 import { Button } from '@/components/ui/button'
@@ -11,18 +11,32 @@ import { Switch as ShadcnSwitch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
 import { CircleAlert } from "lucide-react"
 
-export function SubscribeButton({ label }: { label: string }) {
+
+interface TextFieldProps extends React.ComponentProps<"input"> {
+  label?: string
+}
+
+interface SubscribeButtonProps extends React.ComponentProps<"button"> {
+  label?: string
+}
+
+
+
+
+export const SubscribeButton: FC<SubscribeButtonProps> = ({ label, ...props }) => {
   const form = useFormContext()
   return (
     <form.Subscribe selector={(state) => state.isSubmitting}>
       {(isSubmitting) => (
-        <Button type="submit" disabled={isSubmitting} className='w-full'>
+        <Button type="submit" disabled={isSubmitting} {...props}>
           {label}
         </Button>
       )}
     </form.Subscribe>
   )
 }
+
+
 
 function ErrorMessages({
   errors,
@@ -44,13 +58,11 @@ function ErrorMessages({
   )
 }
 
-export function TextField({
-  label,
-  placeholder,
-}: {
-  label?: string
-  placeholder?: string
-}) {
+
+
+
+
+export const TextField: FC<TextFieldProps> = ({ label, ...props }) => {
   const field = useFieldContext<string>()
   const errors = useStore(field.store, (state) => state.meta.errors)
 
@@ -60,8 +72,8 @@ export function TextField({
         {label}
       </Label>}
       <Input
+        {...props}
         value={field.state.value}
-        placeholder={placeholder}
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(e.target.value)}
         aria-invalid={errors.length > 0 ? 'true' : undefined}
@@ -71,6 +83,8 @@ export function TextField({
     </div>
   )
 }
+
+
 
 export function TextArea({
   label,
