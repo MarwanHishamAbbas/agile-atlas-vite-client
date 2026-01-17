@@ -1,19 +1,50 @@
-
-
 import { Button, buttonVariants } from '@/components/ui/button'
 import { FieldSeparator } from '@/components/ui/separator'
+import useAuth, { SESSION_QUERY_KEY } from '@/hooks/use-auth'
 import { useAppForm } from '@/hooks/use-form'
+import { getUserSessionQueryFn } from '@/lib/api'
 import { loginSchema } from '@/validators/auth'
 import { revalidateLogic } from '@tanstack/react-form'
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { createFileRoute, Link, redirect, useNavigate } from '@tanstack/react-router'
+import { toast } from 'sonner'
 
 
 export const Route = createFileRoute('/(auth)/login')({
     component: LoginForm,
+    validateSearch: (search: Record<string, unknown>): { redirect?: string } => {
+        return {
+            redirect: (search.redirect as string) || '/dashboard',
+        }
+
+    },
+    beforeLoad: async ({ context }) => {
+        const { queryClient } = context
+
+        try {
+            // Check if user is already authenticated
+            const session = await queryClient.ensureQueryData({
+                queryKey: SESSION_QUERY_KEY,
+                queryFn: getUserSessionQueryFn,
+            })
+
+            if (session) {
+                // User is already logged in, redirect to dashboard
+                throw redirect({ to: '/dashboard' })
+            }
+        } catch (error) {
+            // Not authenticated, continue to login page
+            // Only throw if it's a redirect, not a session error
+            if (error instanceof Response) {
+                throw error
+            }
+        }
+    },
+
 })
 
 function LoginForm() {
-
+    const navigate = useNavigate()
+    const { login } = useAuth()
     const form = useAppForm({
         defaultValues: {
             email: "",
@@ -23,8 +54,21 @@ function LoginForm() {
         validationLogic: revalidateLogic(),
         validators: {
             onDynamic: loginSchema
+        },
+        onSubmit: async ({ value: values }) => {
+            await login.mutateAsync(values, {
+                onSuccess: (response) => {
+                    toast.success(response.data.message);
+                    navigate({ to: '/dashboard' })
+                },
+                onError: (error) => {
+                    console.log(error)
+                }
+
+            });
         }
     })
+
     return (
         <main className='space-y-12'>
             <header className='text-center space-x-2'>
@@ -57,7 +101,7 @@ function LoginForm() {
 
                 </div>
                 <form.AppForm>
-                    <form.SubscribeButton label="Login" className='w-full' />
+                    <form.SubscribeButton isLoading={login.isPending} label="Login" className='w-full' />
                 </form.AppForm>
                 <div className='flex items-center justify-between gap-4'>
                     <Button

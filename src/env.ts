@@ -13,7 +13,7 @@ export const env = createEnv({
   clientPrefix: 'VITE_',
 
   client: {
-    VITE_APP_TITLE: z.string().min(1).optional(),
+    VITE_API_BASE_URL: z.string().min(1),
   },
 
   /**

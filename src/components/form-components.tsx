@@ -10,6 +10,7 @@ import { Slider as ShadcnSlider } from '@/components/ui/slider'
 import { Checkbox as ShadcnCheckbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { CircleAlert } from "lucide-react"
+import { Spinner } from './ui/spinner'
 
 
 interface TextFieldProps extends React.ComponentProps<"input"> {
@@ -17,19 +18,23 @@ interface TextFieldProps extends React.ComponentProps<"input"> {
 }
 
 interface SubscribeButtonProps extends React.ComponentProps<"button"> {
-  label?: string
+  label?: string,
+  isLoading?: boolean
 }
 
 
 
 
-export const SubscribeButton: FC<SubscribeButtonProps> = ({ label, ...props }) => {
+export const SubscribeButton: FC<SubscribeButtonProps> = ({ label, isLoading, ...props }) => {
   const form = useFormContext()
   return (
     <form.Subscribe selector={(state) => state.isSubmitting}>
       {(isSubmitting) => (
-        <Button type="submit" disabled={isSubmitting} {...props}>
-          {label}
+        <Button type="submit" disabled={isSubmitting || isLoading} {...props}>
+          {isSubmitting || isLoading ?
+            <Spinner className='size-5' /> :
+            label
+          }
         </Button>
       )}
     </form.Subscribe>

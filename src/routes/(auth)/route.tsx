@@ -1,12 +1,12 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/(auth)')({
+
     component: RouteComponent,
 })
 
 function RouteComponent() {
     return (
-
         <main className='flex items-center justify-between p-2 h-screen'>
             <div className='flex-1/2 h-full bg-neutral-100 rounded-2xl max-lg:hidden p-20 space-y-10 overflow-hidden relative'>
                 <img src="/logo.svg" alt="" className='' />
