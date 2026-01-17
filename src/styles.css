@@ -9,7 +9,7 @@
 ------------------------------------------------- */
 
 body {
-  @apply m-0 bg-background text-foreground;
+  @apply m-0 bg-background text-neutral-900;
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont,
     'Segoe UI', 'Roboto', sans-serif;
   font-weight: 400;

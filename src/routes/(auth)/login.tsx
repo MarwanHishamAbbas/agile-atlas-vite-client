@@ -17,7 +17,8 @@ function LoginForm() {
     const form = useAppForm({
         defaultValues: {
             email: "",
-            password: ""
+            password: "",
+            remember: true
         },
         validationLogic: revalidateLogic(),
         validators: {
@@ -40,11 +41,18 @@ function LoginForm() {
             >
                 <div className='space-y-4'>
                     <form.AppField name="email" >
-                        {(field) => <field.TextField placeholder='Email' />}
+                        {(field) => <field.TextField placeholder='Email' type='email' />}
                     </form.AppField>
                     <form.AppField name="password" >
                         {(field) => <field.TextField placeholder='Password' type='password' />}
                     </form.AppField>
+                    <div className='flex items-center justify-between'>
+
+                        <form.AppField name="remember" >
+                            {(field) => <field.Checkbox label='Remember me' />}
+                        </form.AppField>
+                        <Link to='/forgot-password' className={buttonVariants({ variant: "link", className: 'text-primary label-sm' })}>Forgot password?</Link>
+                    </div>
                     <FieldSeparator label='or continue with' />
 
                 </div>

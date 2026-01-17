@@ -14,7 +14,7 @@ function RouteComponent() {
                     <h3>Boost Your Productivity</h3>
                     <p className='p-lg text-neutral-500'>Streamline your workflow and stay focused on what matters.</p>
                 </div>
-                <img src="/auth.png" alt="" className='absolute -bottom-1/2 left-1/4' />
+                <img src="/auth.png" alt="" className='scale-150 translate-y-1/4 translate-x-1/4' />
             </div>
             <div className='flex-1/2 '>
                 <Outlet />

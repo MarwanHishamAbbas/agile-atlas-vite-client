@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea as ShadcnTextarea } from '@/components/ui/textarea'
 import * as ShadcnSelect from '@/components/ui/select'
 import { Slider as ShadcnSlider } from '@/components/ui/slider'
-import { Switch as ShadcnSwitch } from '@/components/ui/switch'
+import { Checkbox as ShadcnCheckbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { CircleAlert } from "lucide-react"
 
@@ -171,20 +171,22 @@ export function Slider({ label }: { label: string }) {
   )
 }
 
-export function Switch({ label }: { label: string }) {
+
+
+export function Checkbox({ label }: { label?: string }) {
   const field = useFieldContext<boolean>()
   const errors = useStore(field.store, (state) => state.meta.errors)
 
   return (
     <div>
       <div className="flex items-center gap-2">
-        <ShadcnSwitch
+        <ShadcnCheckbox
           id={label}
           onBlur={field.handleBlur}
           checked={field.state.value}
-          onCheckedChange={(checked) => field.handleChange(checked)}
+          onCheckedChange={(checked) => field.handleChange(checked === true)}
         />
-        <Label htmlFor={label}>{label}</Label>
+        {label && <Label htmlFor={label}>{label}</Label>}
       </div>
       {field.state.meta.isTouched && <ErrorMessages errors={errors} />}
     </div>
