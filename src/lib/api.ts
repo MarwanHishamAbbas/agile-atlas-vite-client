@@ -74,7 +74,11 @@ export interface MFASetupResponse {
 export interface LoginResponse {
   message: string
   mfaRequired: boolean
-  user: any
+  user: {
+    id: string
+    email: string
+    name: string
+  }
 }
 export interface RegisterResponse {
   message: string
