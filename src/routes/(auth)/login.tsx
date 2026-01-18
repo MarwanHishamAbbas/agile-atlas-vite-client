@@ -25,8 +25,6 @@ function LoginForm() {
             onDynamic: loginSchema
         },
         onSubmit: async ({ value: values }) => {
-
-
             await login.mutateAsync(values);
         }
     })
@@ -35,7 +33,7 @@ function LoginForm() {
     return (
         <main className='space-y-12'>
             <header className='text-center space-x-2'>
-                <h3>Login to <span className='text-primary'>Sprintly</span></h3>
+                <h3>Login to <span className='text-primary'>AgileAtlas</span></h3>
                 <p className='p-sm text-neutral-500'>Enter your username and password to Login</p>
             </header>
             <form

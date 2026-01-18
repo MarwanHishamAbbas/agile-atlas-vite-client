@@ -36,6 +36,7 @@ const useAuth = () => {
       if (response.data.mfaRequired) {
         // Handle MFA flow - you might want to set some state here
         // or navigate to MFA verification page
+        // TODO
         return
       }
       toast.success(response.data.message)
