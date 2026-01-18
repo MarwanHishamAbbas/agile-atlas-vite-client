@@ -7,18 +7,19 @@ export const Route = createFileRoute('/(auth)')({
     beforeLoad: async ({ context }) => {
         const { queryClient } = context
 
-        const cachedSession = queryClient.getQueryData(sessionQueryOptions.queryKey)
-        if (cachedSession) {
-            try {
-                // Ensure we have a valid session
-                await queryClient.ensureQueryData(sessionQueryOptions)
-            } catch (error) {
-                // Session doesn't exist or refresh failed
-                throw redirect({
-                    to: '/dashboard',
+        try {
+            const session = await queryClient.ensureQueryData(sessionQueryOptions)
 
-                })
+            if (session) {
+                // Already logged in, redirect to dashboard
+                throw redirect({ to: '/dashboard' })
             }
+        } catch (error) {
+            // Not authenticated or redirect error
+            if (error instanceof Response) {
+                throw error // It's a redirect, re-throw it
+            }
+            // It's an auth error, continue to login page
         }
     },
     component: RouteComponent,

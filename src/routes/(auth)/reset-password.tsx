@@ -3,14 +3,12 @@ import { useAppForm } from '@/hooks/use-form'
 import { resetPasswordSchema } from '@/validators/auth'
 import { revalidateLogic } from '@tanstack/react-form'
 import { createFileRoute, redirect } from '@tanstack/react-router'
-import { toast } from 'sonner'
 
 export const Route = createFileRoute('/(auth)/reset-password')({
     component: RouteComponent,
-    validateSearch: (search: Record<string, unknown>): { code?: string, exp?: string } => {
+    validateSearch: (search: Record<string, unknown>): { code?: string } => {
         return {
             code: search.code as string,
-            exp: search.exp as string
         }
     },
     beforeLoad: async ({ search }) => {

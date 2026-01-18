@@ -8,18 +8,18 @@ export const Route = createFileRoute('/_authenticated')({
     beforeLoad: async ({ context }) => {
         const { queryClient } = context
 
-        const cachedSession = queryClient.getQueryData(sessionQueryOptions.queryKey)
-        if (cachedSession) {
-            try {
-                // Ensure we have a valid session
-                await queryClient.ensureQueryData(sessionQueryOptions)
-            } catch (error) {
-                // Session doesn't exist or refresh failed
-                throw redirect({
-                    to: '/login',
+        try {
+            // Ensure session exists (will auto-refresh if needed via axios interceptor)
+            await queryClient.ensureQueryData(sessionQueryOptions)
 
-                })
-            }
+            // Session exists! User is authenticated, continue to route
+        } catch (error) {
+            // Session doesn't exist or refresh failed
+            // Redirect to login with return URL
+            throw redirect({
+                to: '/login',
+
+            })
         }
     },
     loader: async ({ context }) => {
@@ -31,7 +31,6 @@ export const Route = createFileRoute('/_authenticated')({
         } catch (error) {
             throw redirect({
                 to: '/login',
-                search: { redirect: window.location.pathname },
             })
         }
     },
