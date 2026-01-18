@@ -100,17 +100,17 @@ export const verifyEmailMutationFn = async (
   return API.post('/auth/verify-email', data)
 }
 
-// export const forgotPasswordMutationFn = async (
-//   data: ForgotPasswordRequest
-// ): Promise<AxiosResponse<ApiResponse>> => {
-//   return API.post("/auth/password/forgot", data);
-// };
+export const forgotPasswordMutationFn = async (
+  data: ForgotPasswordRequest,
+): Promise<AxiosResponse<{ message: string; email: string }>> => {
+  return API.post('/auth/forgot-password', data)
+}
 
-// export const resetPasswordMutationFn = async (
-//   data: ResetPasswordRequest
-// ): Promise<AxiosResponse<ApiResponse>> => {
-//   return API.post("/auth/password/reset", data);
-// };
+export const resetPasswordMutationFn = async (
+  data: ResetPasswordRequest,
+): Promise<AxiosResponse<{ message: string }>> => {
+  return API.post('/auth/reset-password', data)
+}
 
 export const logoutMutationFn = async (): Promise<
   AxiosResponse<{ message: string }>

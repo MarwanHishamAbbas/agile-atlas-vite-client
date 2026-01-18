@@ -10,7 +10,6 @@ export const Route = createFileRoute('/_authenticated')({
 
         const cachedSession = queryClient.getQueryData(sessionQueryOptions.queryKey)
         if (cachedSession) {
-
             try {
                 // Ensure we have a valid session
                 await queryClient.ensureQueryData(sessionQueryOptions)

@@ -28,9 +28,9 @@ interface SubscribeButtonProps extends React.ComponentProps<"button"> {
 export const SubscribeButton: FC<SubscribeButtonProps> = ({ label, isLoading, ...props }) => {
   const form = useFormContext()
   return (
-    <form.Subscribe selector={(state) => state.isSubmitting}>
-      {(isSubmitting) => (
-        <Button type="submit" disabled={isSubmitting || isLoading} {...props}>
+    <form.Subscribe selector={(state) => [state.isSubmitting, state.canSubmit]}>
+      {([isSubmitting, canSubmit]) => (
+        <Button type="submit" disabled={isSubmitting || isLoading || !canSubmit} {...props}>
           {isSubmitting || isLoading ?
             <Spinner className='size-5' /> :
             label

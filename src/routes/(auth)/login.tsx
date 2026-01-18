@@ -9,8 +9,6 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/(auth)/login')({
     component: LoginForm,
-
-
 })
 
 function LoginForm() {
@@ -27,9 +25,12 @@ function LoginForm() {
             onDynamic: loginSchema
         },
         onSubmit: async ({ value: values }) => {
+
+
             await login.mutateAsync(values);
         }
     })
+
 
     return (
         <main className='space-y-12'>

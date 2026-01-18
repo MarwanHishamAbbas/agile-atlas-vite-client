@@ -1,8 +1,10 @@
 import {
+  forgotPasswordMutationFn,
   getUserSessionQueryFn,
   loginMutationFn,
   logoutMutationFn,
   registerMutationFn,
+  resetPasswordMutationFn,
   verifyEmailMutationFn,
 } from '@/lib/api'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
@@ -77,11 +79,38 @@ const useAuth = () => {
       })
     },
     onError: (error) => {
-      console.error('Register error:', error)
+      console.error('Confirm Email error:', error)
       toast.error(error.message || 'Something went wrong')
       router.navigate({
         to: '/login',
       })
+    },
+  })
+
+  const forgotPasswordMutation = useMutation({
+    mutationFn: forgotPasswordMutationFn,
+    onSuccess: async (response) => {
+      toast.success(response.data.message)
+      router.navigate({
+        to: '/forgot-password',
+      })
+    },
+    onError: (error) => {
+      console.error('Forgot Password email sent error:', error)
+      toast.error(error.message || 'Something went wrong')
+    },
+  })
+  const resetPasswordMutation = useMutation({
+    mutationFn: resetPasswordMutationFn,
+    onSuccess: async (response) => {
+      toast.success(response.data.message)
+      router.navigate({
+        to: '/login',
+      })
+    },
+    onError: (error) => {
+      console.error('Forgot Password email sent error:', error)
+      toast.error(error.message || 'Something went wrong')
     },
   })
 
@@ -109,6 +138,8 @@ const useAuth = () => {
     login: loginMutation,
     register: registerMutation,
     confirmEmail: confirmEmailMutation,
+    forgotPassword: forgotPasswordMutation,
+    resetPassword: resetPasswordMutation,
     logout: logoutMutation,
     refetchSession: sessionQuery.refetch,
   }
