@@ -2,9 +2,12 @@ import {
   getUserSessionQueryFn,
   loginMutationFn,
   logoutMutationFn,
+  registerMutationFn,
+  verifyEmailMutationFn,
 } from '@/lib/api'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from '@tanstack/react-router'
+import { toast } from 'sonner'
 export const SESSION_QUERY_KEY = ['current-session'] as const
 
 export const sessionQueryOptions = {
@@ -33,12 +36,52 @@ const useAuth = () => {
         // or navigate to MFA verification page
         return
       }
+      toast.success(response.data.message)
+      router.navigate({ to: '/dashboard' })
 
       // Invalidate and refetch session to get fresh user data
       await queryClient.invalidateQueries({ queryKey: SESSION_QUERY_KEY })
     },
-    onError: (error: any) => {
+    onError: (error) => {
       console.error('Login error:', error)
+      toast.error(error.message || 'Something went wrong')
+    },
+  })
+
+  const registerMutation = useMutation({
+    mutationFn: registerMutationFn,
+    onSuccess: async (response) => {
+      toast.success(response.data.message, {
+        description: `An email has been sent to ${response.data.user.email}`,
+      })
+      router.navigate({
+        to: '/verify-email',
+        search: (prev) => ({ ...prev, email: response.data.user.email }),
+      })
+    },
+    onError: (error) => {
+      console.error('Register error:', error)
+      toast.error(error.message || 'Something went wrong')
+    },
+  })
+
+  const confirmEmailMutation = useMutation({
+    mutationFn: verifyEmailMutationFn,
+    onSuccess: async (response) => {
+      toast.success(response.data.message, {
+        description: 'Please login again',
+      })
+
+      router.navigate({
+        to: '/login',
+      })
+    },
+    onError: (error) => {
+      console.error('Register error:', error)
+      toast.error(error.message || 'Something went wrong')
+      router.navigate({
+        to: '/login',
+      })
     },
   })
 
@@ -64,6 +107,8 @@ const useAuth = () => {
     user: sessionQuery.data?.data.session,
     isAuthenticated: sessionQuery.isSuccess && !!sessionQuery.data,
     login: loginMutation,
+    register: registerMutation,
+    confirmEmail: confirmEmailMutation,
     logout: logoutMutation,
     refetchSession: sessionQuery.refetch,
   }

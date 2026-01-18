@@ -18,7 +18,7 @@ interface MyRouterContext {
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   component: () => (
     <>
-      <Toaster richColors />
+      <Toaster richColors position='top-right' swipeDirections={['right']} />
       <Outlet />
       <TanStackDevtools
         config={{

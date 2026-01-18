@@ -5,7 +5,7 @@ import axios, {
   type InternalAxiosRequestConfig,
 } from 'axios'
 
-interface ApiErrorResponse {
+export interface ApiErrorResponse {
   error_code: string
   message: string
   status_code: number
@@ -15,7 +15,6 @@ const createAxiosClient = (baseURL: string): AxiosInstance => {
   const client = axios.create({
     baseURL,
     withCredentials: true,
-    timeout: 10000,
     headers: {
       'Content-Type': 'application/json',
     },

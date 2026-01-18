@@ -1,7 +1,31 @@
-import { createFileRoute, Outlet } from '@tanstack/react-router'
+import { SESSION_QUERY_KEY } from '@/hooks/use-auth'
+import { getUserSessionQueryFn } from '@/lib/api'
+import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/(auth)')({
 
+    beforeLoad: async ({ context }) => {
+        const { queryClient } = context
+
+        try {
+            // Check if user is already authenticated
+            const session = await queryClient.ensureQueryData({
+                queryKey: SESSION_QUERY_KEY,
+                queryFn: getUserSessionQueryFn,
+            })
+
+            if (session) {
+                // User is already logged in, redirect to dashboard
+                throw redirect({ to: '/dashboard' })
+            }
+        } catch (error) {
+            // Not authenticated, continue to login page
+            // Only throw if it's a redirect, not a session error
+            if (error instanceof Response) {
+                throw error
+            }
+        }
+    },
     component: RouteComponent,
 })
 

@@ -1,49 +1,20 @@
 import { Button, buttonVariants } from '@/components/ui/button'
 import { FieldSeparator } from '@/components/ui/separator'
-import useAuth, { SESSION_QUERY_KEY } from '@/hooks/use-auth'
+import useAuth from '@/hooks/use-auth'
 import { useAppForm } from '@/hooks/use-form'
-import { getUserSessionQueryFn } from '@/lib/api'
 import { loginSchema } from '@/validators/auth'
 import { revalidateLogic } from '@tanstack/react-form'
-import { createFileRoute, Link, redirect, useNavigate } from '@tanstack/react-router'
-import { toast } from 'sonner'
+import { createFileRoute, Link } from '@tanstack/react-router'
 
 
 export const Route = createFileRoute('/(auth)/login')({
     component: LoginForm,
-    validateSearch: (search: Record<string, unknown>): { redirect?: string } => {
-        return {
-            redirect: (search.redirect as string) || '/dashboard',
-        }
 
-    },
-    beforeLoad: async ({ context }) => {
-        const { queryClient } = context
-
-        try {
-            // Check if user is already authenticated
-            const session = await queryClient.ensureQueryData({
-                queryKey: SESSION_QUERY_KEY,
-                queryFn: getUserSessionQueryFn,
-            })
-
-            if (session) {
-                // User is already logged in, redirect to dashboard
-                throw redirect({ to: '/dashboard' })
-            }
-        } catch (error) {
-            // Not authenticated, continue to login page
-            // Only throw if it's a redirect, not a session error
-            if (error instanceof Response) {
-                throw error
-            }
-        }
-    },
 
 })
 
 function LoginForm() {
-    const navigate = useNavigate()
+
     const { login } = useAuth()
     const form = useAppForm({
         defaultValues: {
@@ -56,16 +27,7 @@ function LoginForm() {
             onDynamic: loginSchema
         },
         onSubmit: async ({ value: values }) => {
-            await login.mutateAsync(values, {
-                onSuccess: (response) => {
-                    toast.success(response.data.message);
-                    navigate({ to: '/dashboard' })
-                },
-                onError: (error) => {
-                    console.log(error)
-                }
-
-            });
+            await login.mutateAsync(values);
         }
     })
 
@@ -85,7 +47,7 @@ function LoginForm() {
             >
                 <div className='space-y-4'>
                     <form.AppField name="email" >
-                        {(field) => <field.TextField placeholder='Email' type='email' />}
+                        {(field) => <field.TextField placeholder='Email' type='email' autoComplete='email' />}
                     </form.AppField>
                     <form.AppField name="password" >
                         {(field) => <field.TextField placeholder='Password' type='password' />}
@@ -126,7 +88,7 @@ function LoginForm() {
                 </div>
             </form>
             <div className='justify-center flex'>
-                <p className=' label-sm text-neutral-400'>Don’t have account? <Link to='/register' className={buttonVariants({ variant: "link", className: 'text-primary' })}>Register</Link></p>
+                <p className=' label-sm text-neutral-400'>Don’t have account? <Link to='/register' preload={false} className={buttonVariants({ variant: "link", className: 'text-primary' })}>Register</Link></p>
             </div>
         </main>
     )

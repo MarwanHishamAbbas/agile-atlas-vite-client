@@ -2,6 +2,7 @@
 
 import { Button, buttonVariants } from '@/components/ui/button'
 import { FieldSeparator } from '@/components/ui/separator'
+import useAuth from '@/hooks/use-auth'
 import { useAppForm } from '@/hooks/use-form'
 import { registerSchema } from '@/validators/auth'
 import { revalidateLogic } from '@tanstack/react-form'
@@ -9,10 +10,12 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 
 
 export const Route = createFileRoute('/(auth)/register')({
+
   component: LoginForm,
 })
 
 function LoginForm() {
+  const { register } = useAuth()
 
   const form = useAppForm({
     defaultValues: {
@@ -24,6 +27,9 @@ function LoginForm() {
     validationLogic: revalidateLogic(),
     validators: {
       onDynamic: registerSchema
+    },
+    onSubmit: async ({ value: values }) => {
+      await register.mutateAsync(values)
     }
   })
   return (
@@ -42,10 +48,10 @@ function LoginForm() {
       >
         <div className='space-y-4'>
           <form.AppField name="name" >
-            {(field) => <field.TextField placeholder='Name' type='text' />}
+            {(field) => <field.TextField placeholder='Name' type='text' autoComplete='username' />}
           </form.AppField>
           <form.AppField name="email" >
-            {(field) => <field.TextField placeholder='Email' type='email' />}
+            {(field) => <field.TextField placeholder='Email' type='email' autoComplete='email' />}
           </form.AppField>
           <form.AppField name="password" >
             {(field) => <field.TextField placeholder='Password' type='password' />}
@@ -56,7 +62,7 @@ function LoginForm() {
 
         </div>
         <form.AppForm>
-          <form.SubscribeButton label="Continue" className='w-full' />
+          <form.SubscribeButton isLoading={register.isPending} label="Continue" className='w-full' />
         </form.AppForm>
         <FieldSeparator label='or continue with' />
         <div className='flex items-center justify-between gap-4'>
@@ -82,7 +88,7 @@ function LoginForm() {
         </div>
       </form>
       <div className='justify-center flex'>
-        <p className=' label-sm text-neutral-400'>Already have an account? <Link to='/login' className={buttonVariants({ variant: "link", className: 'text-primary' })}>Login</Link></p>
+        <p className=' label-sm text-neutral-400'>Already have an account? <Link to='/login' preload={false} className={buttonVariants({ variant: "link", className: 'text-primary' })}>Login</Link></p>
       </div>
     </main>
   )

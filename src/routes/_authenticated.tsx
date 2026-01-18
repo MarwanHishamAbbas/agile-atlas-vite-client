@@ -1,33 +1,30 @@
 
 import { Button } from '@/components/ui/button'
-import useAuth, { SESSION_QUERY_KEY, sessionQueryOptions } from '@/hooks/use-auth'
-import { getUserSessionQueryFn } from '@/lib/api'
+import useAuth, { sessionQueryOptions } from '@/hooks/use-auth'
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 
 
 export const Route = createFileRoute('/_authenticated')({
-    beforeLoad: async ({ context, location }) => {
+    beforeLoad: async ({ context }) => {
         const { queryClient } = context
 
-        try {
-            // Ensure we have a valid session
-            await queryClient.ensureQueryData({
-                queryKey: SESSION_QUERY_KEY,
-                queryFn: getUserSessionQueryFn,
-            })
-        } catch (error) {
-            // Session doesn't exist or refresh failed
-            throw redirect({
-                to: '/login',
-                search: {
-                    redirect: location.pathname,
-                },
-            })
+        const cachedSession = queryClient.getQueryData(sessionQueryOptions.queryKey)
+        if (cachedSession) {
+
+            try {
+                // Ensure we have a valid session
+                await queryClient.ensureQueryData(sessionQueryOptions)
+            } catch (error) {
+                // Session doesn't exist or refresh failed
+                throw redirect({
+                    to: '/login',
+
+                })
+            }
         }
     },
     loader: async ({ context }) => {
         const { queryClient } = context
-
         try {
             // ensureQueryData ensures data is available before rendering
             const { data } = await queryClient.ensureQueryData(sessionQueryOptions)
