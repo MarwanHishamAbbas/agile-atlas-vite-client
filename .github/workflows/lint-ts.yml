@@ -35,7 +35,7 @@ jobs:
 
       - name: 🏃‍♂️ Run ESLint PR
         if: github.event_name == 'pull_request'
-        uses: reviewdog/action-eslint@v1
+        uses: reviewdog/action-eslint@v1.34.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-review
