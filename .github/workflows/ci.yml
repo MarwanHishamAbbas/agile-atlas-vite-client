@@ -46,7 +46,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20' # Use Node 20 (or your version)
-        #   cache: 'pnpm' # Cache pnpm dependencies
+          cache: 'pnpm' # Cache pnpm dependencies
 
       # Step 3: Install pnpm
       - name: Install pnpm
