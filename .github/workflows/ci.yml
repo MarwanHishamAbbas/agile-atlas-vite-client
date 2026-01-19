@@ -41,18 +41,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Step 2: Setup Node.js
+      # Step 2: Install pnpm
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8 # Your pnpm version
+
+      # Step 3: Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20' # Use Node 20 (or your version)
           cache: 'pnpm' # Cache pnpm dependencies
-
-      # Step 3: Install pnpm
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8 # Your pnpm version
 
       # Step 4: Install dependencies
       - name: Install dependencies
