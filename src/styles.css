@@ -10,16 +10,23 @@
 
 body {
   @apply m-0 bg-background text-neutral-900;
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont,
-    'Segoe UI', 'Roboto', sans-serif;
+  font-family:
+    'Inter',
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    'Roboto',
+    sans-serif;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    'Liberation Mono', 'Courier New', monospace;
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
 }
 
 /* -------------------------------------------------
@@ -27,80 +34,78 @@ code {
 ------------------------------------------------- */
 
 :root {
-
-
   /* ---------- PRIMARY (BLUE) ---------- */
-  --primary-900: #102E65;
-  --primary-800: #153C84;
-  --primary-700: #1B4DAA;
-  --primary-600: #2363DA;
-  --primary-500: #266DF0;
-  --primary-400: #518AF3;
-  --primary-300: #6E9DF5;
-  --primary-200: #9BBCF8;
-  --primary-100: #BCD2FA;
-  --primary-50:  #E9F0FE;
+  --primary-900: #102e65;
+  --primary-800: #153c84;
+  --primary-700: #1b4daa;
+  --primary-600: #2363da;
+  --primary-500: #266df0;
+  --primary-400: #518af3;
+  --primary-300: #6e9df5;
+  --primary-200: #9bbcf8;
+  --primary-100: #bcd2fa;
+  --primary-50: #e9f0fe;
 
   /* ---------- NEUTRAL ---------- */
   --neutral-900: #111625;
-  --neutral-800: #1C2434;
-  --neutral-700: #2D384C;
-  --neutral-600: #3E4A60;
+  --neutral-800: #1c2434;
+  --neutral-700: #2d384c;
+  --neutral-600: #3e4a60;
   --neutral-500: #596881;
-  --neutral-400: #8796AF;
-  --neutral-300: #C5CFDD;
-  --neutral-200: #DEE4EE;
-  --neutral-100: #EFF3F8;
-  --neutral-50:  #F7F9FB;
-  --neutral-0:   #FFFFFF;
+  --neutral-400: #8796af;
+  --neutral-300: #c5cfdd;
+  --neutral-200: #dee4ee;
+  --neutral-100: #eff3f8;
+  --neutral-50: #f7f9fb;
+  --neutral-0: #ffffff;
 
   /* ---------- BLUE ---------- */
   --blue-900: #172769;
-  --blue-800: #1E338A;
-  --blue-700: #2742B2;
-  --blue-600: #3255E4;
-  --blue-500: #375DFB;
-  --blue-400: #5F7DFC;
-  --blue-300: #7992FC;
-  --blue-200: #A3B4FD;
-  --blue-100: #C1CDFE;
-  --blue-50:  #EBEFFF;
+  --blue-800: #1e338a;
+  --blue-700: #2742b2;
+  --blue-600: #3255e4;
+  --blue-500: #375dfb;
+  --blue-400: #5f7dfc;
+  --blue-300: #7992fc;
+  --blue-200: #a3b4fd;
+  --blue-100: #c1cdfe;
+  --blue-50: #ebefff;
 
   /* ---------- YELLOW ---------- */
-  --yellow-900: #66491B;
+  --yellow-900: #66491b;
   --yellow-800: #856023;
-  --yellow-700: #AC7C2D;
-  --yellow-600: #DC9E3A;
-  --yellow-500: #F2AE40;
-  --yellow-400: #F5BE66;
-  --yellow-300: #FFFFFF;
-  --yellow-200: #F9DAA7;
-  --yellow-100: #FBE6C4;
-  --yellow-50:  #FEF7EC;
+  --yellow-700: #ac7c2d;
+  --yellow-600: #dc9e3a;
+  --yellow-500: #f2ae40;
+  --yellow-400: #f5be66;
+  --yellow-300: #ffffff;
+  --yellow-200: #f9daa7;
+  --yellow-100: #fbe6c4;
+  --yellow-50: #fef7ec;
 
   /* ---------- RED ---------- */
-  --red-900: #5E0C1B;
-  --red-800: #7B0F24;
-  --red-700: #9E142E;
-  --red-600: #CB193B;
-  --red-500: #DF1C41;
-  --red-400: #E54967;
-  --red-300: #EA6780;
-  --red-200: #F097A8;
-  --red-100: #F5B9C4;
-  --red-50:  #FCE8EC;
+  --red-900: #5e0c1b;
+  --red-800: #7b0f24;
+  --red-700: #9e142e;
+  --red-600: #cb193b;
+  --red-500: #df1c41;
+  --red-400: #e54967;
+  --red-300: #ea6780;
+  --red-200: #f097a8;
+  --red-100: #f5b9c4;
+  --red-50: #fce8ec;
 
   /* ---------- GREEN ---------- */
-  --green-900: #18543E;
-  --green-800: #1F6D51;
-  --green-700: #288D68;
-  --green-600: #33B586;
-  --green-500: #38C793;
-  --green-400: #60D2A9;
-  --green-300: #7AD9B7;
-  --green-200: #A3E5CD;
-  --green-100: #C1EEDE;
-  --green-50:  #EBF9F4;
+  --green-900: #18543e;
+  --green-800: #1f6d51;
+  --green-700: #288d68;
+  --green-600: #33b586;
+  --green-500: #38c793;
+  --green-400: #60d2a9;
+  --green-300: #7ad9b7;
+  --green-200: #a3e5cd;
+  --green-100: #c1eede;
+  --green-50: #ebf9f4;
 
   /* ---------- SEMANTIC MAPPING (SHADCN) ---------- */
   --background: var(--neutral-0);
@@ -242,37 +247,125 @@ code {
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-
 /* -------------------------------------------------
    TYPOGRAPHY — FIGMA EXACT
 ------------------------------------------------- */
 
 /* Headings */
-h1 { font-size: 48px; line-height: 56px; font-weight: 500; letter-spacing: -1%; }
-h2 { font-size: 40px; line-height: 48px; font-weight: 500; letter-spacing: -1%; }
-h3 { font-size: 32px; line-height: 40px; font-weight: 600; letter-spacing: -1%; }
-h4 { font-size: 24px; line-height: 32px; font-weight: 500; }
-h5 { font-size: 20px; line-height: 28px; font-weight: 500; }
-h6 { font-size: 16px; line-height: 24px; font-weight: 500; }
+h1 {
+  font-size: 48px;
+  line-height: 56px;
+  font-weight: 500;
+  letter-spacing: -1%;
+}
+h2 {
+  font-size: 40px;
+  line-height: 48px;
+  font-weight: 500;
+  letter-spacing: -1%;
+}
+h3 {
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 600;
+  letter-spacing: -1%;
+}
+h4 {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 500;
+}
+h5 {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 500;
+}
+h6 {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+}
 
 /* Paragraphs */
-.p-xl { font-size: 24px; line-height: 32px; letter-spacing: -1.5%; }
-.p-lg { font-size: 18px; line-height: 32px; letter-spacing: -1.5%; }
-.p-md { font-size: 14px; line-height: 24px; letter-spacing: -1%; }
-.p-sm { font-size: 14px; line-height: 20px; letter-spacing: -0.6%; }
-.p-xs { font-size: 12px; line-height: 16px; letter-spacing: 0%; }
+.p-xl {
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: -1.5%;
+}
+.p-lg {
+  font-size: 18px;
+  line-height: 32px;
+  letter-spacing: -1.5%;
+}
+.p-md {
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: -1%;
+}
+.p-sm {
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -0.6%;
+}
+.p-xs {
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0%;
+}
 
 /* Labels */
-.label-xl { font-size: 16px; line-height: 24px; font-weight: 500; letter-spacing: -1.5%; }
-.label-lg { font-size: 14px; line-height: 24px; font-weight: 500; letter-spacing: -1.5%; }
-.label-md { font-size: 14px; line-height: 24px; font-weight: 500; letter-spacing: -1%; }
-.label-sm { font-size: 14px; line-height: 20px; font-weight: 500; letter-spacing: -0.6%; }
-.label-xs { font-size: 12px; line-height: 16px; font-weight: 500; }
+.label-xl {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -1.5%;
+}
+.label-lg {
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -1.5%;
+}
+.label-md {
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -1%;
+}
+.label-sm {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: -0.6%;
+}
+.label-xs {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+}
 
 /* Subheadings (Uppercase) */
-.sub-md { font-size: 14px; line-height: 24px; font-weight: 500; letter-spacing: 6%; text-transform: uppercase; }
-.sub-sm { font-size: 12px; line-height: 20px; font-weight: 500; letter-spacing: 6%; text-transform: uppercase; }
-.sub-xs { font-size: 12px; line-height: 16px; font-weight: 500; letter-spacing: 4%; text-transform: uppercase; }
+.sub-md {
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: 6%;
+  text-transform: uppercase;
+}
+.sub-sm {
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: 6%;
+  text-transform: uppercase;
+}
+.sub-xs {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  letter-spacing: 4%;
+  text-transform: uppercase;
+}
 
 /* -------------------------------------------------
    BASE LAYER

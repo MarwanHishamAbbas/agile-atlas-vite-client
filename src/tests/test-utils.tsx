@@ -1,6 +1,13 @@
-import { render, type RenderOptions } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { RouterProvider, createMemoryHistory, createRootRoute, createRoute, createRouter } from '@tanstack/react-router'
+import {
+  RouterProvider,
+  createMemoryHistory,
+  createRootRoute,
+  createRoute,
+  createRouter,
+} from '@tanstack/react-router'
+import type { RenderOptions } from '@testing-library/react'
 import type { ReactElement, ReactNode } from 'react'
 
 // Create a fresh QueryClient for each test
@@ -18,7 +25,6 @@ function createTestQueryClient() {
   })
 }
 
-
 // ============================================================================
 // WRAPPER COMPONENT - Provides all necessary context
 // ============================================================================
@@ -28,8 +34,11 @@ interface WrapperProps {
   initialRoute?: string
 }
 
-
-function TestWrapper({ children, queryClient, initialRoute = '/' }: WrapperProps) {
+function TestWrapper({
+  children,
+  queryClient,
+  initialRoute = '/',
+}: WrapperProps) {
   const testQueryClient = queryClient || createTestQueryClient()
   // Create a simple router for testing
   const rootRoute = createRootRoute({
@@ -54,11 +63,7 @@ function TestWrapper({ children, queryClient, initialRoute = '/' }: WrapperProps
       <RouterProvider router={router} />
     </QueryClientProvider>
   )
-
-
 }
-
-
 
 interface CustomRenderOptions extends Omit<RenderOptions, 'wrapper'> {
   queryClient?: QueryClient
@@ -67,7 +72,7 @@ interface CustomRenderOptions extends Omit<RenderOptions, 'wrapper'> {
 
 export function renderWithProviders(
   ui: ReactElement,
-  options?: CustomRenderOptions
+  options?: CustomRenderOptions,
 ) {
   const { queryClient, initialRoute, ...renderOptions } = options || {}
 

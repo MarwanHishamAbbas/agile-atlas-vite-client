@@ -1,7 +1,7 @@
-import { type User } from '@/@types/auth'
-
-import { type AxiosResponse } from 'axios'
 import API from './axios-client'
+import type { User } from '@/@types/auth'
+
+import type { AxiosResponse } from 'axios'
 
 // ============= Request Types =============
 export interface LoginRequest {
@@ -62,7 +62,7 @@ export interface CurrentSessionResponse {
 
 export interface SessionsResponse {
   message: string
-  sessions: Session[]
+  sessions: Array<Session>
 }
 
 export interface MFASetupResponse {

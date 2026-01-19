@@ -1,9 +1,10 @@
-import { env } from '@/env'
-import axios, {
-  type AxiosInstance,
-  type AxiosError,
-  type InternalAxiosRequestConfig,
+import axios from 'axios'
+import type {
+  AxiosError,
+  AxiosInstance,
+  InternalAxiosRequestConfig,
 } from 'axios'
+import { env } from '@/env'
 
 export interface ApiErrorResponse {
   error_code: string

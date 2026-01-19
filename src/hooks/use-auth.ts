@@ -1,3 +1,6 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useRouter } from '@tanstack/react-router'
+import { toast } from 'sonner'
 import {
   forgotPasswordMutationFn,
   getUserSessionQueryFn,
@@ -7,9 +10,7 @@ import {
   resetPasswordMutationFn,
   verifyEmailMutationFn,
 } from '@/lib/api'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { useRouter } from '@tanstack/react-router'
-import { toast } from 'sonner'
+
 export const SESSION_QUERY_KEY = ['current-session'] as const
 
 export const sessionQueryOptions = {
@@ -53,7 +54,7 @@ const useAuth = () => {
 
   const registerMutation = useMutation({
     mutationFn: registerMutationFn,
-    onSuccess: async (response) => {
+    onSuccess: (response) => {
       toast.success(response.data.message, {
         description: `An email has been sent to ${response.data.user.email}`,
       })
@@ -70,7 +71,7 @@ const useAuth = () => {
 
   const confirmEmailMutation = useMutation({
     mutationFn: verifyEmailMutationFn,
-    onSuccess: async (response) => {
+    onSuccess: (response) => {
       toast.success(response.data.message, {
         description: 'Please login again',
       })
@@ -90,7 +91,7 @@ const useAuth = () => {
 
   const forgotPasswordMutation = useMutation({
     mutationFn: forgotPasswordMutationFn,
-    onSuccess: async (response) => {
+    onSuccess: (response) => {
       toast.success(response.data.message)
       router.navigate({
         to: '/forgot-password',
@@ -103,7 +104,7 @@ const useAuth = () => {
   })
   const resetPasswordMutation = useMutation({
     mutationFn: resetPasswordMutationFn,
-    onSuccess: async (response) => {
+    onSuccess: (response) => {
       toast.success(response.data.message)
       router.navigate({
         to: '/login',
@@ -118,7 +119,7 @@ const useAuth = () => {
   // Logout mutation
   const logoutMutation = useMutation({
     mutationFn: logoutMutationFn,
-    onSuccess: async () => {
+    onSuccess: () => {
       // Clear all queries
       queryClient.clear()
 

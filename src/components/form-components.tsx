@@ -1,5 +1,7 @@
 import { useStore } from '@tanstack/react-form'
-import { type FC } from 'react'
+import { CircleAlert } from 'lucide-react'
+import { Spinner } from './ui/spinner'
+import type { FC } from 'react'
 import { useFieldContext, useFormContext } from '@/hooks/use-form-context'
 
 import { Button } from '@/components/ui/button'
@@ -9,39 +11,36 @@ import * as ShadcnSelect from '@/components/ui/select'
 import { Slider as ShadcnSlider } from '@/components/ui/slider'
 import { Checkbox as ShadcnCheckbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
-import { CircleAlert } from "lucide-react"
-import { Spinner } from './ui/spinner'
 
-
-interface TextFieldProps extends React.ComponentProps<"input"> {
+interface TextFieldProps extends React.ComponentProps<'input'> {
   label?: string
 }
 
-interface SubscribeButtonProps extends React.ComponentProps<"button"> {
-  label?: string,
+interface SubscribeButtonProps extends React.ComponentProps<'button'> {
+  label?: string
   isLoading?: boolean
 }
 
-
-
-
-export const SubscribeButton: FC<SubscribeButtonProps> = ({ label, isLoading, ...props }) => {
+export const SubscribeButton: FC<SubscribeButtonProps> = ({
+  label,
+  isLoading,
+  ...props
+}) => {
   const form = useFormContext()
   return (
     <form.Subscribe selector={(state) => [state.isSubmitting, state.canSubmit]}>
       {([isSubmitting, canSubmit]) => (
-        <Button type="submit" disabled={isSubmitting || isLoading || !canSubmit} {...props}>
-          {isSubmitting || isLoading ?
-            <Spinner className='size-5' /> :
-            label
-          }
+        <Button
+          type="submit"
+          disabled={isSubmitting || isLoading || !canSubmit}
+          {...props}
+        >
+          {isSubmitting || isLoading ? <Spinner className="size-5" /> : label}
         </Button>
       )}
     </form.Subscribe>
   )
 }
-
-
 
 function ErrorMessages({
   errors,
@@ -55,7 +54,7 @@ function ErrorMessages({
           key={typeof error === 'string' ? error : error.message}
           className="p-xs text-destructive flex items-center gap-1"
         >
-          <CircleAlert className=' stroke-destructive size-3.5' />
+          <CircleAlert className=" stroke-destructive size-3.5" />
           {typeof error === 'string' ? error : error.message}
         </div>
       ))}
@@ -63,33 +62,24 @@ function ErrorMessages({
   )
 }
 
-
-
-
-
 export const TextField: FC<TextFieldProps> = ({ label, ...props }) => {
   const field = useFieldContext<string>()
   const errors = useStore(field.store, (state) => state.meta.errors)
 
   return (
-    <div className='space-y-1.5'>
-      {label && <Label htmlFor={label}>
-        {label}
-      </Label>}
+    <div className="space-y-1.5">
+      {label && <Label htmlFor={label}>{label}</Label>}
       <Input
         {...props}
         value={field.state.value}
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(e.target.value)}
         aria-invalid={errors.length > 0 ? 'true' : undefined}
-
       />
       {field.state.meta.isTouched && <ErrorMessages errors={errors} />}
     </div>
   )
 }
-
-
 
 export function TextArea({
   label,
@@ -175,8 +165,6 @@ export function Slider({ label }: { label: string }) {
     </div>
   )
 }
-
-
 
 export function Checkbox({ label }: { label?: string }) {
   const field = useFieldContext<boolean>()

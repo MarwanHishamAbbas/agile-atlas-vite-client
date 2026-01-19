@@ -1,11 +1,8 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { renderHook } from '@testing-library/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import useAuth from '../use-auth'
 import * as api from '@/lib/api'
-
-
-
 
 vi.mock('@/lib/api', () => ({
   loginMutationFn: vi.fn(),
@@ -62,12 +59,8 @@ describe('useAuth Hook', () => {
   // useAuth needs both Router and QueryClient context
   // ============================================================================
   const wrapper = ({ children }: { children: React.ReactNode }) => {
-
-
     return (
-      <QueryClientProvider client={queryClient}>
-        {children}
-      </QueryClientProvider>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     )
   }
 
@@ -113,12 +106,11 @@ describe('useAuth Hook', () => {
         headers: {},
         status: 200,
         statusText: 'OK',
-        config: {} as any
+        config: {} as any,
       }
       vi.mocked(api.loginMutationFn).mockResolvedValue(mockResponse)
 
       const { result } = renderHook(() => useAuth(), { wrapper })
-
 
       await result.current.login.mutateAsync({
         email: 'test@example.com',
@@ -132,11 +124,6 @@ describe('useAuth Hook', () => {
         email: 'test@example.com',
         password: 'password123',
       })
-
     })
   })
 })
-
-
-
-
