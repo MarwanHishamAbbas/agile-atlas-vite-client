@@ -56,7 +56,7 @@ jobs:
 
       # Step 4: Install dependencies
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
       # Step 5: TypeScript type checking
       - name: TypeScript Check
@@ -87,7 +87,7 @@ jobs:
           version: 8
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
       - name: Run test with coverage
         run: pnpm run test:coverage
