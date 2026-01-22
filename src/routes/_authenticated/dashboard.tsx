@@ -6,10 +6,11 @@ export const Route = createFileRoute('/_authenticated/dashboard')({
     const { queryClient } = context
 
     try {
-      const { data } = await queryClient.ensureQueryData(userWorkspacesQueryOptions)
+      const { data } = await queryClient.ensureQueryData(
+        userWorkspacesQueryOptions,
+      )
       if (data.length === 0) {
         throw redirect({ to: '/onboarding' })
-
       }
 
       // Already logged in, redirect to dashboard

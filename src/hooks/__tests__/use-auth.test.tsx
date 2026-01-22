@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import useAuth from '../use-auth'
 import * as api from '@/lib/api/auth'
 
-vi.mock('@/lib/api', () => ({
+vi.mock('@/lib/api/auth', () => ({
   loginMutationFn: vi.fn(),
   registerMutationFn: vi.fn(),
   logoutMutationFn: vi.fn(),
