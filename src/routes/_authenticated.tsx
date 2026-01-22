@@ -10,6 +10,7 @@ export const Route = createFileRoute('/_authenticated')({
       // Ensure session exists (will auto-refresh if needed via axios interceptor)
       await queryClient.ensureQueryData(sessionQueryOptions)
 
+
       // Session exists! User is authenticated, continue to route
     } catch (error) {
       // Session doesn't exist or refresh failed
@@ -41,7 +42,6 @@ function AuthLayout() {
 
   return (
     <div>
-      <h3>{session.email}</h3>
       <Button
         disabled={logout.isPending}
         onClick={() => logout.mutateAsync()}

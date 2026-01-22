@@ -9,7 +9,7 @@ import {
   registerMutationFn,
   resetPasswordMutationFn,
   verifyEmailMutationFn,
-} from '@/lib/api'
+} from '@/lib/api/auth'
 
 export const SESSION_QUERY_KEY = ['current-session'] as const
 

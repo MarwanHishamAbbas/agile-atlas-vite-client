@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { renderHook } from '@testing-library/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import useAuth from '../use-auth'
-import * as api from '@/lib/api'
+import * as api from '@/lib/api/auth'
 
 vi.mock('@/lib/api', () => ({
   loginMutationFn: vi.fn(),

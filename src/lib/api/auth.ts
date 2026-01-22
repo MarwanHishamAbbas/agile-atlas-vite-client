@@ -1,4 +1,4 @@
-import API from './axios-client'
+import API from '../axios-client'
 import type { User } from '@/@types/auth'
 
 import type { AxiosResponse } from 'axios'
