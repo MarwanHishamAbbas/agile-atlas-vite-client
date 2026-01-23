@@ -1,11 +1,30 @@
 import { revalidateLogic } from '@tanstack/react-form'
-import { createFileRoute } from '@tanstack/react-router'
-import useWorkspace from '@/hooks/use-workspace-hook'
+import { createFileRoute, redirect } from '@tanstack/react-router'
+import useWorkspace, { userWorkspacesQueryOptions } from '@/hooks/use-workspace-hook'
 import { useAppForm } from '@/hooks/use-form'
 import { workspaceNameSchema } from '@/validators/workspace'
 
 export const Route = createFileRoute('/_authenticated/onboarding')({
   component: RouteComponent,
+  loader: async ({ context }) => {
+    const { queryClient } = context
+
+    try {
+      const { data } = await queryClient.fetchQuery(
+        userWorkspacesQueryOptions,
+      )
+      if (data.length > 0) {
+        throw redirect({ to: '/dashboard' })
+      }
+
+    } catch (error) {
+
+      if (error instanceof Response) {
+        throw error
+      }
+
+    }
+  },
 })
 
 function RouteComponent() {

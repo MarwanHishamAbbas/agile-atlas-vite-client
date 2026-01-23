@@ -13,6 +13,7 @@ interface Workspace {
   id: string
   name: string
   owner_id: string
+  color: string
   created_at: string
   updated_at: string
   owner_name: string

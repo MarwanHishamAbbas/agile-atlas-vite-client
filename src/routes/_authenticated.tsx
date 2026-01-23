@@ -1,6 +1,22 @@
 import { Outlet, createFileRoute, redirect } from '@tanstack/react-router'
-import { Button } from '@/components/ui/button'
-import useAuth, { sessionQueryOptions } from '@/hooks/use-auth'
+
+import { AppSidebar } from "@/components/app-sidebar"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar"
+import { sessionQueryOptions } from '@/hooks/use-auth'
+import { userWorkspacesQueryOptions } from '@/hooks/use-workspace-hook'
 
 export const Route = createFileRoute('/_authenticated')({
   beforeLoad: async ({ context }) => {
@@ -36,20 +52,12 @@ export const Route = createFileRoute('/_authenticated')({
 })
 
 function AuthLayout() {
-  const { session } = Route.useLoaderData()
-  const { logout } = useAuth()
+
 
   return (
-    <div>
-      <Button
-        disabled={logout.isPending}
-        onClick={() => logout.mutateAsync()}
-        variant={'destructive'}
-      >
-        Logout
-      </Button>
-      {/* You can add common layout elements here like navbar, sidebar etc */}
-      <Outlet />
-    </div>
+    <Outlet />
+
   )
 }
+
+
