@@ -1,10 +1,16 @@
 
 
 import * as React from "react"
+import { useNavigate, useParams } from "@tanstack/react-router"
 import { BookMarked, ChevronsUpDown, Plus } from "lucide-react"
 import { useSuspenseQuery } from "@tanstack/react-query"
-
-
+import { buttonVariants } from "./ui/button"
+import CreateWorkspaceForm from "./workspace/create-workspace-form"
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,20 +25,22 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { userWorkspacesQueryOptions } from "@/hooks/use-workspace-hook"
+import { userWorkspacesQueryOptions } from "@/hooks/use-workspace"
 import { cn } from "@/lib/utils"
 
+
 export function WorkspaceSwitcher() {
-  const { isMobile, state } = useSidebar()
+  const { isMobile, state, setOpenMobile } = useSidebar()
+  const [createWorkspaceOpen, setCreateWorkspaceOpen] = React.useState<boolean>(false)
 
   const { data: workspaces } = useSuspenseQuery(userWorkspacesQueryOptions).data
-  const [activeWorkspace, setActiveTeam] = React.useState(workspaces[0])
 
-  // const {getWorkspace} = useWorkspace()
-  console.log(activeWorkspace.color)
-  const handleWorkspaceChange = async () => {
 
-  }
+  const navigate = useNavigate()
+  const params = useParams({ strict: false })
+  const activeWorkspace = workspaces.find((workspace) => workspace.id === params.workspace_id)
+
+
 
   return (
     <SidebarMenu>
@@ -55,10 +63,10 @@ export function WorkspaceSwitcher() {
             >
               <div className="flex size-6 items-center justify-center rounded-md border">
 
-                <BookMarked className={cn("size-3.5 shrink-0", `fill-[${activeWorkspace.color}]`)} />
+                <BookMarked className={cn("size-3.5 shrink-0", `fill-[${activeWorkspace?.color}]`)} />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{activeWorkspace.name}</span>
+                <span className="truncate font-medium">{activeWorkspace?.name}</span>
               </div>
               <ChevronsUpDown className="ml-auto" />
             </SidebarMenuButton>
@@ -75,8 +83,9 @@ export function WorkspaceSwitcher() {
             {workspaces.map((workspace) => (
               <DropdownMenuItem
                 key={workspace.name}
-                // onClick={() => setActiveTeam(workspace)}
-                className="gap-2 p-2"
+                onClick={() => navigate({ to: "/workspaces/$workspace_id/dashboard", params: { workspace_id: workspace.id } }).then(() => setOpenMobile(false))}
+                disabled={workspace.id === activeWorkspace?.id}
+                className={cn("gap-2 p-2 text-neutral-500 font-medium ", workspace.id === activeWorkspace?.id ? "cursor-not-allowed pointer-events-none" : "")}
               >
                 <div className="flex size-6 items-center justify-center rounded-md border">
                   <BookMarked className={cn("size-3.5 shrink-0", `fill-[${workspace.color}]`)} />
@@ -85,11 +94,19 @@ export function WorkspaceSwitcher() {
               </DropdownMenuItem>
             ))}
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="gap-2 p-2">
-              <div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
-                <Plus className="size-4" />
-              </div>
-              <div className="text-muted-foreground font-medium">Add workspace</div>
+            <DropdownMenuItem asChild className="gap-2 p-2 ">
+              <Dialog open={createWorkspaceOpen} onOpenChange={setCreateWorkspaceOpen}>
+                <DialogTrigger className={buttonVariants({ className: 'w-full justify-start', variant: "ghost" })}>
+                  <div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
+                    <Plus className="size-4" />
+                  </div>
+                  <div className="text-muted-foreground font-medium">Add workspace</div>
+                </DialogTrigger>
+                <DialogContent>
+                  <CreateWorkspaceForm setCreateWorkspaceOpen={setCreateWorkspaceOpen} />
+                </DialogContent>
+              </Dialog>
+
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

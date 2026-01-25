@@ -41,7 +41,10 @@ const useAuth = () => {
         return
       }
       toast.success(response.data.message)
-      router.navigate({ to: '/dashboard' })
+      router.navigate({
+        to: '/workspaces/$workspace_id/dashboard',
+        params: { workspace_id: '' },
+      })
 
       // Invalidate and refetch session to get fresh user data
       await queryClient.invalidateQueries({ queryKey: SESSION_QUERY_KEY })

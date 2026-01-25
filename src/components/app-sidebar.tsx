@@ -1,6 +1,8 @@
-" "
+
 
 import * as React from "react"
+import { useParams } from "@tanstack/react-router"
+
 import {
   AudioWaveform,
   BookOpen,
@@ -20,7 +22,7 @@ import {
 import { NavMenu } from "@/components/nav-main"
 import { NavProjects } from "@/components/nav-projects"
 import { NavUser } from "@/components/nav-user"
-import { WorkspaceSwitcher } from "@/components/team-switcher"
+import { WorkspaceSwitcher } from "@/components/workspace-switcher"
 import {
   Sidebar,
   SidebarContent,
@@ -30,62 +32,50 @@ import {
 } from "@/components/ui/sidebar"
 
 // This is sample data.
-const data = {
 
-  teams: [
-    {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
-  ],
-  navMenu: [
-    {
-      name: "Home",
-      url: "/dashboard",
-      icon: Home,
-    },
-    {
-      name: "Message",
-      url: "/",
-      icon: MessageCircle,
-    },
-    {
-      name: "Calendar",
-      url: "/",
-      icon: Calendar1Icon,
-    },
-  ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
-    },
-  ],
-}
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+
+  const { workspace_id } = useParams({ strict: false })
+
+  const data = {
+
+
+    navMenu: [
+      {
+        name: "Home",
+        url: `/workspaces/${workspace_id}/dashboard`,
+        icon: Home,
+      },
+      {
+        name: "Message",
+        url: `/workspaces/${workspace_id}/messages`,
+        icon: MessageCircle,
+      },
+      {
+        name: "Calendar",
+        url: `/workspaces/${workspace_id}/calender`,
+        icon: Calendar1Icon,
+      },
+    ],
+    projects: [
+      {
+        name: "Design Engineering",
+        url: "#",
+        icon: Frame,
+      },
+      {
+        name: "Sales & Marketing",
+        url: "#",
+        icon: PieChart,
+      },
+      {
+        name: "Travel",
+        url: "#",
+        icon: Map,
+      },
+    ],
+  }
 
   return (
     <Sidebar collapsible="icon" {...props}>

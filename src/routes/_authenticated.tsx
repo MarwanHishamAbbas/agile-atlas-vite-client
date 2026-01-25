@@ -10,13 +10,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar"
 import { sessionQueryOptions } from '@/hooks/use-auth'
-import { userWorkspacesQueryOptions } from '@/hooks/use-workspace-hook'
 
 export const Route = createFileRoute('/_authenticated')({
   beforeLoad: async ({ context }) => {

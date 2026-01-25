@@ -29,8 +29,16 @@ export const getUserWorkspacesFn = async (): Promise<
   return await API.get('/workspace/')
 }
 
+export const getCurrentWorkspaceFn = async (data: {
+  workspaceId: string
+}): Promise<AxiosResponse<UserWorkspacesResponse>> => {
+  return await API.get(`/workspace/${data.workspaceId}`)
+}
+
 export const createWorkspaceFn = async (data: {
   name: string
-}): Promise<AxiosResponse<Workspace>> => {
+}): Promise<
+  AxiosResponse<{ message: string; createdWorkspace: Workspace }>
+> => {
   return await API.post('/workspace/create', data)
 }
