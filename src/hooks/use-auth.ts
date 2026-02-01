@@ -42,8 +42,8 @@ const useAuth = () => {
       }
       toast.success(response.data.message)
       router.navigate({
-        to: '/workspaces/$workspace_id/dashboard',
-        params: { workspace_id: '' },
+        to: '/$workspace_id/dashboard',
+        params: { workspace_id: 'uuid' },
       })
 
       // Invalidate and refetch session to get fresh user data

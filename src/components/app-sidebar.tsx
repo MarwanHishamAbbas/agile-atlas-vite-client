@@ -44,36 +44,27 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     navMenu: [
       {
         name: "Home",
-        url: `/workspaces/${workspace_id}/dashboard`,
+        url: `/${workspace_id}/dashboard`,
         icon: Home,
       },
       {
         name: "Message",
-        url: `/workspaces/${workspace_id}/messages`,
+        url: `/${workspace_id}/messages`,
         icon: MessageCircle,
       },
       {
         name: "Calendar",
-        url: `/workspaces/${workspace_id}/calender`,
+        url: `/${workspace_id}/calender`,
         icon: Calendar1Icon,
       },
     ],
     projects: [
       {
-        name: "Design Engineering",
-        url: "#",
-        icon: Frame,
+        name: "Frontend",
+        url: `/${workspace_id}/projects/`,
+
       },
-      {
-        name: "Sales & Marketing",
-        url: "#",
-        icon: PieChart,
-      },
-      {
-        name: "Travel",
-        url: "#",
-        icon: Map,
-      },
+
     ],
   }
 

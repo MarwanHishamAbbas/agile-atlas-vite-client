@@ -1,7 +1,7 @@
 
 
 import * as React from "react"
-import { useNavigate, useParams } from "@tanstack/react-router"
+import { useMatchRoute, useNavigate, useParams } from "@tanstack/react-router"
 import { BookMarked, ChevronsUpDown, Plus } from "lucide-react"
 import { useSuspenseQuery } from "@tanstack/react-query"
 import { buttonVariants } from "./ui/button"
@@ -39,6 +39,7 @@ export function WorkspaceSwitcher() {
   const navigate = useNavigate()
   const params = useParams({ strict: false })
   const activeWorkspace = workspaces.find((workspace) => workspace.id === params.workspace_id)
+
 
 
 
@@ -83,7 +84,7 @@ export function WorkspaceSwitcher() {
             {workspaces.map((workspace) => (
               <DropdownMenuItem
                 key={workspace.name}
-                onClick={() => navigate({ to: "/workspaces/$workspace_id/dashboard", params: { workspace_id: workspace.id } }).then(() => setOpenMobile(false))}
+                onClick={() => navigate({ to: "/$workspace_id/dashboard", params: { workspace_id: workspace.id } }).then(() => setOpenMobile(false))}
                 disabled={workspace.id === activeWorkspace?.id}
                 className={cn("gap-2 p-2 text-neutral-500 font-medium ", workspace.id === activeWorkspace?.id ? "cursor-not-allowed pointer-events-none" : "")}
               >

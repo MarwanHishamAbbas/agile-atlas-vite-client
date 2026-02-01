@@ -7,6 +7,7 @@ import {
   createWorkspaceFn,
   getCurrentWorkspaceFn,
   getUserWorkspacesFn,
+  getWorkspaceMembersFn,
 } from '@/lib/api/workspace'
 
 export const USER_WORKSPACES_QUERY_KEY = ['user-workspaces'] as const
@@ -27,13 +28,20 @@ export const currentWorkspaceQueryOptions = (workspaceId: string) => ({
   retry: false,
   staleTime: 5 * 60 * 1000,
   gcTime: 10 * 60 * 1000,
-  enabled: !!workspaceId, // Only run if workspaceId exists
+})
+
+export const workspaceMembersQueryOptions = (workspaceId: string) => ({
+  queryKey: ['workspace-members', workspaceId] as const,
+  queryFn: () => getWorkspaceMembersFn({ workspaceId }),
+  retry: false,
+  staleTime: 5 * 60 * 1000,
+  gcTime: 10 * 60 * 1000,
 })
 
 const useWorkspace = () => {
   const queryClient = useQueryClient()
   const params = useParams({ strict: false }) // Get params from URL
-  const workspaceId = params.workspace_id as string | undefined
+  const workspaceId = params.workspace_id as string
 
   const userWorkspaces = useQuery({
     queryFn: getUserWorkspacesFn,
@@ -43,6 +51,11 @@ const useWorkspace = () => {
   // Get current workspace (from URL param)
   const currentWorkspace = useQuery({
     ...currentWorkspaceQueryOptions(workspaceId || ''),
+    enabled: !!workspaceId, // Only fetch if workspaceId exists in URL
+  })
+
+  const workspaceMembers = useQuery({
+    ...workspaceMembersQueryOptions(workspaceId || ''),
     enabled: !!workspaceId, // Only fetch if workspaceId exists in URL
   })
 
@@ -57,9 +70,10 @@ const useWorkspace = () => {
   })
 
   return {
-    userWorkspaces: userWorkspaces,
+    userWorkspaces,
     createWorkspace,
     currentWorkspace,
+    workspaceMembers,
   }
 }
 

@@ -18,7 +18,6 @@ interface Workspace {
   updated_at: string
   owner_name: string
   user_role: 'OWNER' | 'MEMBER' | 'ADMIN'
-  members: Array<Member>
 }
 
 interface UserWorkspacesResponse extends Array<Workspace> {}
@@ -31,8 +30,14 @@ export const getUserWorkspacesFn = async (): Promise<
 
 export const getCurrentWorkspaceFn = async (data: {
   workspaceId: string
-}): Promise<AxiosResponse<UserWorkspacesResponse>> => {
+}): Promise<AxiosResponse<Workspace>> => {
   return await API.get(`/workspace/${data.workspaceId}`)
+}
+
+export const getWorkspaceMembersFn = async (data: {
+  workspaceId: string
+}): Promise<AxiosResponse<Array<Member>>> => {
+  return await API.get(`/workspace/members/${data.workspaceId}`)
 }
 
 export const createWorkspaceFn = async (data: {

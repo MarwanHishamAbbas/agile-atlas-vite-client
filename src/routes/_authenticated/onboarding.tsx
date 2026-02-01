@@ -12,7 +12,7 @@ export const Route = createFileRoute('/_authenticated/onboarding')({
         userWorkspacesQueryOptions,
       )
       if (data.length > 0) {
-        throw redirect({ to: '/workspaces/$workspace_id/dashboard', params: { workspace_id: data[0].id } })
+        throw redirect({ to: '/$workspace_id/dashboard', params: { workspace_id: data[0].id } })
       }
 
     } catch (error) {

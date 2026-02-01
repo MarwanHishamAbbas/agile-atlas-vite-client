@@ -24,9 +24,8 @@ const CreateWorkspaceForm: FC<CreateWorkspaceFormProps> = ({ setCreateWorkspaceO
         onSubmit: async ({ value: values }) => {
             const { data } = await createWorkspace.mutateAsync(values)
 
-            console.log(data)
             // After creating, navigate to dashboard or something
-            navigate({ to: '/workspaces/$workspace_id/dashboard', params: { workspace_id: data.createdWorkspace.id } })
+            navigate({ to: '/$workspace_id/dashboard', params: { workspace_id: data.createdWorkspace.id } })
             setCreateWorkspaceOpen?.(false)
         },
     })

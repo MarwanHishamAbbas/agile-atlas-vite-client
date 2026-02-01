@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as authRouteRouteImport } from './routes/(auth)/route'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
 import { Route as AuthenticatedLayoutRouteImport } from './routes/_authenticated/_layout'
 import { Route as authVerifyEmailRouteImport } from './routes/(auth)/verify-email'
@@ -19,8 +20,9 @@ import { Route as authRegisterRouteImport } from './routes/(auth)/register'
 import { Route as authLoginRouteImport } from './routes/(auth)/login'
 import { Route as authForgotPasswordRouteImport } from './routes/(auth)/forgot-password'
 import { Route as authConfirmEmailRouteImport } from './routes/(auth)/confirm-email'
-import { Route as AuthenticatedLayoutWorkspacesWorkspace_idMessagesRouteImport } from './routes/_authenticated/_layout/workspaces/$workspace_id/messages'
-import { Route as AuthenticatedLayoutWorkspacesWorkspace_idDashboardRouteImport } from './routes/_authenticated/_layout/workspaces/$workspace_id/dashboard'
+import { Route as AuthenticatedLayoutWorkspace_idMessagesRouteImport } from './routes/_authenticated/_layout/$workspace_id/messages'
+import { Route as AuthenticatedLayoutWorkspace_idDashboardRouteImport } from './routes/_authenticated/_layout/$workspace_id/dashboard'
+import { Route as AuthenticatedLayoutWorkspace_idProjectsProject_idRouteImport } from './routes/_authenticated/_layout/$workspace_id/projects/$project_id'
 
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
@@ -28,6 +30,11 @@ const AuthenticatedRoute = AuthenticatedRouteImport.update({
 } as any)
 const authRouteRoute = authRouteRouteImport.update({
   id: '/(auth)',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedOnboardingRoute = AuthenticatedOnboardingRouteImport.update({
@@ -69,20 +76,27 @@ const authConfirmEmailRoute = authConfirmEmailRouteImport.update({
   path: '/confirm-email',
   getParentRoute: () => authRouteRoute,
 } as any)
-const AuthenticatedLayoutWorkspacesWorkspace_idMessagesRoute =
-  AuthenticatedLayoutWorkspacesWorkspace_idMessagesRouteImport.update({
-    id: '/workspaces/$workspace_id/messages',
-    path: '/workspaces/$workspace_id/messages',
+const AuthenticatedLayoutWorkspace_idMessagesRoute =
+  AuthenticatedLayoutWorkspace_idMessagesRouteImport.update({
+    id: '/$workspace_id/messages',
+    path: '/$workspace_id/messages',
     getParentRoute: () => AuthenticatedLayoutRoute,
   } as any)
-const AuthenticatedLayoutWorkspacesWorkspace_idDashboardRoute =
-  AuthenticatedLayoutWorkspacesWorkspace_idDashboardRouteImport.update({
-    id: '/workspaces/$workspace_id/dashboard',
-    path: '/workspaces/$workspace_id/dashboard',
+const AuthenticatedLayoutWorkspace_idDashboardRoute =
+  AuthenticatedLayoutWorkspace_idDashboardRouteImport.update({
+    id: '/$workspace_id/dashboard',
+    path: '/$workspace_id/dashboard',
+    getParentRoute: () => AuthenticatedLayoutRoute,
+  } as any)
+const AuthenticatedLayoutWorkspace_idProjectsProject_idRoute =
+  AuthenticatedLayoutWorkspace_idProjectsProject_idRouteImport.update({
+    id: '/$workspace_id/projects/$project_id',
+    path: '/$workspace_id/projects/$project_id',
     getParentRoute: () => AuthenticatedLayoutRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
   '/confirm-email': typeof authConfirmEmailRoute
   '/forgot-password': typeof authForgotPasswordRoute
   '/login': typeof authLoginRoute
@@ -90,10 +104,12 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof authResetPasswordRoute
   '/verify-email': typeof authVerifyEmailRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
-  '/workspaces/$workspace_id/dashboard': typeof AuthenticatedLayoutWorkspacesWorkspace_idDashboardRoute
-  '/workspaces/$workspace_id/messages': typeof AuthenticatedLayoutWorkspacesWorkspace_idMessagesRoute
+  '/$workspace_id/dashboard': typeof AuthenticatedLayoutWorkspace_idDashboardRoute
+  '/$workspace_id/messages': typeof AuthenticatedLayoutWorkspace_idMessagesRoute
+  '/$workspace_id/projects/$project_id': typeof AuthenticatedLayoutWorkspace_idProjectsProject_idRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
   '/confirm-email': typeof authConfirmEmailRoute
   '/forgot-password': typeof authForgotPasswordRoute
   '/login': typeof authLoginRoute
@@ -101,11 +117,13 @@ export interface FileRoutesByTo {
   '/reset-password': typeof authResetPasswordRoute
   '/verify-email': typeof authVerifyEmailRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
-  '/workspaces/$workspace_id/dashboard': typeof AuthenticatedLayoutWorkspacesWorkspace_idDashboardRoute
-  '/workspaces/$workspace_id/messages': typeof AuthenticatedLayoutWorkspacesWorkspace_idMessagesRoute
+  '/$workspace_id/dashboard': typeof AuthenticatedLayoutWorkspace_idDashboardRoute
+  '/$workspace_id/messages': typeof AuthenticatedLayoutWorkspace_idMessagesRoute
+  '/$workspace_id/projects/$project_id': typeof AuthenticatedLayoutWorkspace_idProjectsProject_idRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
   '/(auth)': typeof authRouteRouteWithChildren
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/(auth)/confirm-email': typeof authConfirmEmailRoute
@@ -116,12 +134,14 @@ export interface FileRoutesById {
   '/(auth)/verify-email': typeof authVerifyEmailRoute
   '/_authenticated/_layout': typeof AuthenticatedLayoutRouteWithChildren
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
-  '/_authenticated/_layout/workspaces/$workspace_id/dashboard': typeof AuthenticatedLayoutWorkspacesWorkspace_idDashboardRoute
-  '/_authenticated/_layout/workspaces/$workspace_id/messages': typeof AuthenticatedLayoutWorkspacesWorkspace_idMessagesRoute
+  '/_authenticated/_layout/$workspace_id/dashboard': typeof AuthenticatedLayoutWorkspace_idDashboardRoute
+  '/_authenticated/_layout/$workspace_id/messages': typeof AuthenticatedLayoutWorkspace_idMessagesRoute
+  '/_authenticated/_layout/$workspace_id/projects/$project_id': typeof AuthenticatedLayoutWorkspace_idProjectsProject_idRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/'
     | '/confirm-email'
     | '/forgot-password'
     | '/login'
@@ -129,10 +149,12 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/verify-email'
     | '/onboarding'
-    | '/workspaces/$workspace_id/dashboard'
-    | '/workspaces/$workspace_id/messages'
+    | '/$workspace_id/dashboard'
+    | '/$workspace_id/messages'
+    | '/$workspace_id/projects/$project_id'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/'
     | '/confirm-email'
     | '/forgot-password'
     | '/login'
@@ -140,10 +162,12 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/verify-email'
     | '/onboarding'
-    | '/workspaces/$workspace_id/dashboard'
-    | '/workspaces/$workspace_id/messages'
+    | '/$workspace_id/dashboard'
+    | '/$workspace_id/messages'
+    | '/$workspace_id/projects/$project_id'
   id:
     | '__root__'
+    | '/'
     | '/(auth)'
     | '/_authenticated'
     | '/(auth)/confirm-email'
@@ -154,11 +178,13 @@ export interface FileRouteTypes {
     | '/(auth)/verify-email'
     | '/_authenticated/_layout'
     | '/_authenticated/onboarding'
-    | '/_authenticated/_layout/workspaces/$workspace_id/dashboard'
-    | '/_authenticated/_layout/workspaces/$workspace_id/messages'
+    | '/_authenticated/_layout/$workspace_id/dashboard'
+    | '/_authenticated/_layout/$workspace_id/messages'
+    | '/_authenticated/_layout/$workspace_id/projects/$project_id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
   authRouteRoute: typeof authRouteRouteWithChildren
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
 }
@@ -168,7 +194,7 @@ declare module '@tanstack/react-router' {
     '/_authenticated': {
       id: '/_authenticated'
       path: ''
-      fullPath: ''
+      fullPath: '/'
       preLoaderRoute: typeof AuthenticatedRouteImport
       parentRoute: typeof rootRouteImport
     }
@@ -177,6 +203,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof authRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/onboarding': {
@@ -189,7 +222,7 @@ declare module '@tanstack/react-router' {
     '/_authenticated/_layout': {
       id: '/_authenticated/_layout'
       path: ''
-      fullPath: ''
+      fullPath: '/'
       preLoaderRoute: typeof AuthenticatedLayoutRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
@@ -235,18 +268,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authConfirmEmailRouteImport
       parentRoute: typeof authRouteRoute
     }
-    '/_authenticated/_layout/workspaces/$workspace_id/messages': {
-      id: '/_authenticated/_layout/workspaces/$workspace_id/messages'
-      path: '/workspaces/$workspace_id/messages'
-      fullPath: '/workspaces/$workspace_id/messages'
-      preLoaderRoute: typeof AuthenticatedLayoutWorkspacesWorkspace_idMessagesRouteImport
+    '/_authenticated/_layout/$workspace_id/messages': {
+      id: '/_authenticated/_layout/$workspace_id/messages'
+      path: '/$workspace_id/messages'
+      fullPath: '/$workspace_id/messages'
+      preLoaderRoute: typeof AuthenticatedLayoutWorkspace_idMessagesRouteImport
       parentRoute: typeof AuthenticatedLayoutRoute
     }
-    '/_authenticated/_layout/workspaces/$workspace_id/dashboard': {
-      id: '/_authenticated/_layout/workspaces/$workspace_id/dashboard'
-      path: '/workspaces/$workspace_id/dashboard'
-      fullPath: '/workspaces/$workspace_id/dashboard'
-      preLoaderRoute: typeof AuthenticatedLayoutWorkspacesWorkspace_idDashboardRouteImport
+    '/_authenticated/_layout/$workspace_id/dashboard': {
+      id: '/_authenticated/_layout/$workspace_id/dashboard'
+      path: '/$workspace_id/dashboard'
+      fullPath: '/$workspace_id/dashboard'
+      preLoaderRoute: typeof AuthenticatedLayoutWorkspace_idDashboardRouteImport
+      parentRoute: typeof AuthenticatedLayoutRoute
+    }
+    '/_authenticated/_layout/$workspace_id/projects/$project_id': {
+      id: '/_authenticated/_layout/$workspace_id/projects/$project_id'
+      path: '/$workspace_id/projects/$project_id'
+      fullPath: '/$workspace_id/projects/$project_id'
+      preLoaderRoute: typeof AuthenticatedLayoutWorkspace_idProjectsProject_idRouteImport
       parentRoute: typeof AuthenticatedLayoutRoute
     }
   }
@@ -275,15 +315,18 @@ const authRouteRouteWithChildren = authRouteRoute._addFileChildren(
 )
 
 interface AuthenticatedLayoutRouteChildren {
-  AuthenticatedLayoutWorkspacesWorkspace_idDashboardRoute: typeof AuthenticatedLayoutWorkspacesWorkspace_idDashboardRoute
-  AuthenticatedLayoutWorkspacesWorkspace_idMessagesRoute: typeof AuthenticatedLayoutWorkspacesWorkspace_idMessagesRoute
+  AuthenticatedLayoutWorkspace_idDashboardRoute: typeof AuthenticatedLayoutWorkspace_idDashboardRoute
+  AuthenticatedLayoutWorkspace_idMessagesRoute: typeof AuthenticatedLayoutWorkspace_idMessagesRoute
+  AuthenticatedLayoutWorkspace_idProjectsProject_idRoute: typeof AuthenticatedLayoutWorkspace_idProjectsProject_idRoute
 }
 
 const AuthenticatedLayoutRouteChildren: AuthenticatedLayoutRouteChildren = {
-  AuthenticatedLayoutWorkspacesWorkspace_idDashboardRoute:
-    AuthenticatedLayoutWorkspacesWorkspace_idDashboardRoute,
-  AuthenticatedLayoutWorkspacesWorkspace_idMessagesRoute:
-    AuthenticatedLayoutWorkspacesWorkspace_idMessagesRoute,
+  AuthenticatedLayoutWorkspace_idDashboardRoute:
+    AuthenticatedLayoutWorkspace_idDashboardRoute,
+  AuthenticatedLayoutWorkspace_idMessagesRoute:
+    AuthenticatedLayoutWorkspace_idMessagesRoute,
+  AuthenticatedLayoutWorkspace_idProjectsProject_idRoute:
+    AuthenticatedLayoutWorkspace_idProjectsProject_idRoute,
 }
 
 const AuthenticatedLayoutRouteWithChildren =
@@ -304,6 +347,7 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
 )
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
   authRouteRoute: authRouteRouteWithChildren,
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
 }

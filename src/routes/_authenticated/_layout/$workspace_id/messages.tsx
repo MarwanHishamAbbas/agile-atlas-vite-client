@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute(
-    '/_authenticated/_layout/workspaces/$workspace_id/messages',
+    '/_authenticated/_layout/$workspace_id/messages',
 )({
     component: RouteComponent,
 })

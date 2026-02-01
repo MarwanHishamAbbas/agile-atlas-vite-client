@@ -9,7 +9,7 @@ export const Route = createFileRoute('/(auth)')({
       await queryClient.ensureQueryData(sessionQueryOptions)
 
       // Already logged in, redirect to dashboard
-      throw redirect({ to: '/dashboard' })
+      throw redirect({ to: '/$workspace_id/dashboard', params: { workspace_id: "" } })
     } catch (error) {
       // Not authenticated or redirect error
       if (error instanceof Response) {
