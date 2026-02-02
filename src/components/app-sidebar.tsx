@@ -71,7 +71,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <WorkspaceSwitcher />
+        <WorkspaceSwitcher workspace_id={workspace_id} />
       </SidebarHeader>
       <SidebarContent>
         <NavMenu items={data.navMenu} />

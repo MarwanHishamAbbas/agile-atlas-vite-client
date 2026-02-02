@@ -1,19 +1,12 @@
 import { Outlet, createFileRoute, redirect } from '@tanstack/react-router'
 
-import { AppSidebar } from "@/components/app-sidebar"
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
+
+
 
 import { sessionQueryOptions } from '@/hooks/use-auth'
 
 export const Route = createFileRoute('/_authenticated')({
-  beforeLoad: async ({ context }) => {
+  beforeLoad: async ({ context, params }) => {
     const { queryClient } = context
 
     try {

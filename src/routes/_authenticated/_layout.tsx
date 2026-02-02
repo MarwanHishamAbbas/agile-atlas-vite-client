@@ -1,6 +1,6 @@
-import { Outlet, createFileRoute, redirect, useLocation, useParams } from '@tanstack/react-router'
+import { Outlet, createFileRoute, redirect } from '@tanstack/react-router'
 
-import { Bell, Calendar1Icon, Home, MessageCircle, Settings } from 'lucide-react'
+import { Bell, Settings } from 'lucide-react'
 import { AppSidebar } from "@/components/app-sidebar"
 
 
@@ -14,10 +14,16 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
 export const Route = createFileRoute('/_authenticated/_layout')({
-    beforeLoad: async ({ context }) => {
+
+    beforeLoad: async ({ context, params }) => {
         const { queryClient } = context
         const { data } = await queryClient.ensureQueryData(userWorkspacesQueryOptions)
-        if (data.length === 0) {
+        const { workspace_id } = params as { workspace_id: string }
+        if (workspace_id === 'uuid') {
+            throw redirect({ to: ".", params: { workspace_id: data.lastSelectedWorkspaceId } })
+        }
+
+        if (data.workspaces.length === 0) {
             throw redirect({ to: '/onboarding' })
         } else {
             return
@@ -25,6 +31,7 @@ export const Route = createFileRoute('/_authenticated/_layout')({
     },
     loader: async ({ context }) => {
         const { queryClient } = context
+
         try {
             await queryClient.prefetchQuery(userWorkspacesQueryOptions)
 
@@ -36,6 +43,7 @@ export const Route = createFileRoute('/_authenticated/_layout')({
     },
 
     component: AuthLayout,
+
 
 })
 
@@ -63,9 +71,11 @@ function AuthLayout() {
                         </div>
                     </div>
                 </header>
+
                 <div className="bg-white min-h-screen flex-1 rounded-xl md:min-h-min p-4">
                     <Outlet />
                 </div>
+
             </SidebarInset>
         </SidebarProvider>
 

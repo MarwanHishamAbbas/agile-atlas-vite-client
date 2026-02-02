@@ -1,7 +1,7 @@
 
 
 import * as React from "react"
-import { useMatchRoute, useNavigate, useParams } from "@tanstack/react-router"
+import { useNavigate } from "@tanstack/react-router"
 import { BookMarked, ChevronsUpDown, Plus } from "lucide-react"
 import { useSuspenseQuery } from "@tanstack/react-query"
 import { buttonVariants } from "./ui/button"
@@ -29,16 +29,18 @@ import { userWorkspacesQueryOptions } from "@/hooks/use-workspace"
 import { cn } from "@/lib/utils"
 
 
-export function WorkspaceSwitcher() {
+export function WorkspaceSwitcher({ workspace_id }: { workspace_id: string | undefined }) {
   const { isMobile, state, setOpenMobile } = useSidebar()
   const [createWorkspaceOpen, setCreateWorkspaceOpen] = React.useState<boolean>(false)
 
-  const { data: workspaces } = useSuspenseQuery(userWorkspacesQueryOptions).data
+  const { data } = useSuspenseQuery(userWorkspacesQueryOptions).data
 
 
   const navigate = useNavigate()
-  const params = useParams({ strict: false })
-  const activeWorkspace = workspaces.find((workspace) => workspace.id === params.workspace_id)
+
+
+
+  const activeWorkspace = data.workspaces.find((workspace) => workspace.id === workspace_id)
 
 
 
@@ -81,7 +83,7 @@ export function WorkspaceSwitcher() {
             <DropdownMenuLabel className="text-muted-foreground text-xs">
               Workspaces
             </DropdownMenuLabel>
-            {workspaces.map((workspace) => (
+            {data.workspaces.map((workspace) => (
               <DropdownMenuItem
                 key={workspace.name}
                 onClick={() => navigate({ to: "/$workspace_id/dashboard", params: { workspace_id: workspace.id } }).then(() => setOpenMobile(false))}

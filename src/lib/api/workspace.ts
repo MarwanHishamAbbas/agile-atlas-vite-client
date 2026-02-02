@@ -20,7 +20,10 @@ interface Workspace {
   user_role: 'OWNER' | 'MEMBER' | 'ADMIN'
 }
 
-interface UserWorkspacesResponse extends Array<Workspace> {}
+interface UserWorkspacesResponse {
+  workspaces: Array<Workspace>
+  lastSelectedWorkspaceId: string | undefined
+}
 
 export const getUserWorkspacesFn = async (): Promise<
   AxiosResponse<UserWorkspacesResponse>
