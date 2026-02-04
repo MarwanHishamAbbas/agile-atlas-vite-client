@@ -5,6 +5,7 @@ import { currentWorkspaceQueryOptions, userWorkspacesQueryOptions, workspaceMemb
 import { Button } from '@/components/ui/button'
 import WorkspaceMembersWidget from '@/components/workspace/workspace-members'
 import { Spinner } from '@/components/ui/spinner'
+import { workspaceProjectsQueryOptions } from '@/hooks/use-project'
 
 
 export const Route = createFileRoute('/_authenticated/_layout/$workspace_id/dashboard')({
@@ -14,13 +15,14 @@ export const Route = createFileRoute('/_authenticated/_layout/$workspace_id/dash
 
         } catch (error) {
             const { data } = await context.queryClient.ensureQueryData(userWorkspacesQueryOptions)
-            throw redirect({ to: '/$workspace_id/dashboard', params: { workspace_id: data[0].id } })
+            throw redirect({ to: '/$workspace_id/dashboard', params: { workspace_id: data.workspaces[0].id } })
         }
     },
     loader: async ({ params, context }) => {
         const { queryClient } = context
         const { data } = await queryClient.ensureQueryData(currentWorkspaceQueryOptions(params.workspace_id))
         queryClient.prefetchQuery(workspaceMembersQueryOptions(params.workspace_id))
+        queryClient.prefetchQuery(workspaceProjectsQueryOptions(params.workspace_id))
         return { currentWorkspace: data }
     },
     notFoundComponent: () => {
@@ -44,7 +46,6 @@ function RouteComponent() {
             </div>
             <div className='flex items-center gap-2'>
                 <Suspense fallback={<Spinner />}>
-
                     <WorkspaceMembersWidget params={workspace_id} />
                 </Suspense>
                 <Button size={'sm'}> <Plus /> Invite Teammate</Button>

@@ -11,8 +11,8 @@ export const Route = createFileRoute('/_authenticated/onboarding')({
       const { data } = await queryClient.fetchQuery(
         userWorkspacesQueryOptions,
       )
-      if (data.length > 0) {
-        throw redirect({ to: '/$workspace_id/dashboard', params: { workspace_id: data[0].id } })
+      if (data.workspaces.length > 0) {
+        throw redirect({ to: '/$workspace_id/dashboard', params: { workspace_id: data.workspaces[0].id } })
       }
 
     } catch (error) {

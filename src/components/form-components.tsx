@@ -15,6 +15,10 @@ import { Label } from '@/components/ui/label'
 interface TextFieldProps extends React.ComponentProps<'input'> {
   label?: string
 }
+interface TextAreaProps extends React.ComponentProps<'textarea'> {
+  label?: string
+  rows?: number
+}
 
 interface SubscribeButtonProps extends React.ComponentProps<'button'> {
   label?: string
@@ -81,26 +85,18 @@ export const TextField: FC<TextFieldProps> = ({ label, ...props }) => {
   )
 }
 
-export function TextArea({
-  label,
-  rows = 3,
-}: {
-  label: string
-  rows?: number
-}) {
+export const TextArea: FC<TextAreaProps> = ({ label, ...props }) => {
   const field = useFieldContext<string>()
   const errors = useStore(field.store, (state) => state.meta.errors)
 
   return (
-    <div>
-      <Label htmlFor={label} className="mb-2 text-xl font-bold">
-        {label}
-      </Label>
+    <div className="space-y-1.5">
+      {label && <Label htmlFor={label}>{label}</Label>}
       <ShadcnTextarea
+        {...props}
         id={label}
         value={field.state.value}
         onBlur={field.handleBlur}
-        rows={rows}
         onChange={(e) => field.handleChange(e.target.value)}
       />
       {field.state.meta.isTouched && <ErrorMessages errors={errors} />}

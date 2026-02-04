@@ -12,6 +12,8 @@ import {
 import { userWorkspacesQueryOptions } from '@/hooks/use-workspace'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { workspaceProjectsQueryOptions } from '@/hooks/use-project'
+
 
 export const Route = createFileRoute('/_authenticated/_layout')({
 
@@ -29,11 +31,12 @@ export const Route = createFileRoute('/_authenticated/_layout')({
             return
         }
     },
-    loader: async ({ context }) => {
+    loader: async ({ context, params }) => {
         const { queryClient } = context
 
         try {
-            await queryClient.prefetchQuery(userWorkspacesQueryOptions)
+            await queryClient.ensureQueryData(userWorkspacesQueryOptions)
+
 
         } catch (error) {
             throw redirect({
