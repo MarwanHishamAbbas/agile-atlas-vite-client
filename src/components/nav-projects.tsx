@@ -1,11 +1,12 @@
-import React, { Suspense } from "react";
+import React from "react";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 import {
   Folder,
   Plus,
 
 } from "lucide-react"
-import { Link, useLocation } from "@tanstack/react-router";
+import { Link, useLocation, useParams } from "@tanstack/react-router";
 
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { buttonVariants } from "./ui/button";
@@ -21,20 +22,18 @@ import {
 
 } from "@/components/ui/sidebar"
 import { cn } from "@/lib/utils";
+import { workspaceProjectsQueryOptions } from "@/hooks/use-project";
 
 
 
-export function NavProjects({
-  projects,
-}: {
-  projects: Array<{
-    name: string
-    url: string
-  }>
-}) {
+export function NavProjects() {
 
   const { pathname } = useLocation()
+  const { workspace_id } = useParams({ strict: false })
   const [createProjectOpen, setCreateProjectOpen] = React.useState<boolean>(false)
+  const { data: projects } = useSuspenseQuery(workspaceProjectsQueryOptions(workspace_id as string))
+
+
 
 
   return (
@@ -54,72 +53,20 @@ export function NavProjects({
       </SidebarGroupLabel>
 
       <SidebarMenu>
-        {projects.map((item) => (
+        {projects.data.map((item) => (
           <SidebarMenuItem key={item.name}>
             <SidebarMenuButton asChild>
-              <Link activeProps={{ className: 'bg-white text-neutral-900' }} to={item.url}>
-                <Folder className={cn(`${item.url}` === pathname ? 'stroke-primary' : 'stroke-neutral-400')} />
+              <Link activeProps={{ className: 'bg-white text-neutral-900' }} to={'/$workspace_id/projects/$project_id'} params={{ project_id: item.id, workspace_id: workspace_id as string }}>
+                <Folder className={cn(`${item.id}` === pathname ? 'stroke-primary' : 'stroke-neutral-400')} />
                 <span>{item.name}</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
-          // /4ec5fd4f-3cf4-4cc3-a6fd-b577d5d60937/projects//uuid
         ))}
       </SidebarMenu>
 
 
     </SidebarGroup>
-    // <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-    //   <div className="flex items-center justify-between">
 
-    //     <SidebarGroupLabel>PROJECTS</SidebarGroupLabel>
-    //     <Plus className="size-4 text-neutral-400" />
-    //   </div>
-    //   <SidebarMenu>
-    //     {projects.map((item) => (
-    //       <SidebarMenuItem key={item.name}>
-    //         <SidebarMenuButton asChild>
-    //           <a href={item.url}>
-    //             <item.icon />
-    //             <span>{item.name}</span>
-    //           </a>
-    //         </SidebarMenuButton>
-    //         {/* <DropdownMenu>
-    //           <DropdownMenuTrigger asChild>
-    //             <SidebarMenuAction showOnHover>
-    //               <MoreHorizontal />
-    //               <span className="sr-only">More</span>
-    //             </SidebarMenuAction>
-    //           </DropdownMenuTrigger>
-    //           <DropdownMenuContent
-    //             className="w-48 rounded-lg"
-    //             side={isMobile ? "bottom" : "right"}
-    //             align={isMobile ? "end" : "start"}
-    //           >
-    //             <DropdownMenuItem>
-    //               <Folder className="text-muted-foreground" />
-    //               <span>View Project</span>
-    //             </DropdownMenuItem>
-    //             <DropdownMenuItem>
-    //               <Forward className="text-muted-foreground" />
-    //               <span>Share Project</span>
-    //             </DropdownMenuItem>
-    //             <DropdownMenuSeparator />
-    //             <DropdownMenuItem>
-    //               <Trash2 className="text-muted-foreground" />
-    //               <span>Delete Project</span>
-    //             </DropdownMenuItem>
-    //           </DropdownMenuContent>
-    //         </DropdownMenu> */}
-    //       </SidebarMenuItem>
-    //     ))}
-    //     <SidebarMenuItem>
-    //       <SidebarMenuButton className="text-sidebar-foreground/70">
-    //         <MoreHorizontal className="text-sidebar-foreground/70" />
-    //         <span>More</span>
-    //       </SidebarMenuButton>
-    //     </SidebarMenuItem>
-    //   </SidebarMenu>
-    // </SidebarGroup>
   )
 }

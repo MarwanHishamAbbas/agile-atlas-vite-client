@@ -32,6 +32,36 @@ graph TD
     V -->|Push| X[Run TypeScript Check<br/>Fail on Errors]
 ```
 
+### **Decision Tree:**
+
+```
+Does page NEED this data to render?
+├─ YES → Use loader + useSuspenseQuery
+└─ NO → Ask: When should it load?
+    ├─ On user action (click/hover) → useQuery with enabled
+    ├─ After other data loads → useQuery with dependent query
+    ├─ Based on search/filter → useQuery with dynamic params
+    └─ Real-time updates → useQuery with refetchInterval
+```
+
+**Use Suspense:**
+
+```
+✅ Route-level data (loaded in loader)
+✅ Independent page sections (progressive loading)
+✅ Cleaner code (no loading state boilerplate)
+✅ Multiple components sharing same query
+```
+
+**Use useQuery + isLoading:**
+
+```
+✅ User-triggered (search, filters, tabs)
+✅ Conditional fetching (enabled: boolean)
+✅ Need explicit loading control
+✅ Polling/refetching scenarios
+```
+
 ## Optimized Data Fetching with Suspense
 
 ```tsx

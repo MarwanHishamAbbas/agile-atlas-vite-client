@@ -1,5 +1,3 @@
-
-
 import * as React from "react"
 import { useParams } from "@tanstack/react-router"
 
@@ -9,7 +7,7 @@ import {
   MessageCircle,
 } from "lucide-react"
 
-import { useSuspenseQuery } from "@tanstack/react-query"
+import { SidebarItemsSkeleton } from "./common/sidebar-items-skeleton"
 import { Spinner } from "./ui/spinner"
 import { NavMenu } from "@/components/nav-main"
 import { NavProjects } from "@/components/nav-projects"
@@ -22,9 +20,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
-import { workspaceProjectsQueryOptions } from "@/hooks/use-project"
 
-// This is sample data.
 
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -32,7 +28,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { workspace_id } = useParams({ strict: false })
 
 
-  const { data: projects } = useSuspenseQuery(workspaceProjectsQueryOptions(workspace_id as string))
 
   const data = {
 
@@ -54,10 +49,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: Calendar1Icon,
       },
     ],
-    projects: projects.data.map((project) => ({
-      name: project.name,
-      url: `/${workspace_id}/projects/${project.id}`
-    }))
+
   }
 
   return (
@@ -67,9 +59,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMenu items={data.navMenu} />
-        <React.Suspense fallback={<Spinner />}>
-          <NavProjects projects={data.projects} />
+        <React.Suspense fallback={<SidebarItemsSkeleton title="PROJECTS" />}>
+          <NavProjects />
         </React.Suspense>
+
       </SidebarContent>
       <SidebarFooter>
         <NavUser />
