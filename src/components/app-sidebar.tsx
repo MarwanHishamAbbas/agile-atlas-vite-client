@@ -8,7 +8,6 @@ import {
 } from "lucide-react"
 
 import { SidebarItemsSkeleton } from "./common/sidebar-items-skeleton"
-import { Spinner } from "./ui/spinner"
 import { NavMenu } from "@/components/nav-main"
 import { NavProjects } from "@/components/nav-projects"
 import { NavUser } from "@/components/nav-user"

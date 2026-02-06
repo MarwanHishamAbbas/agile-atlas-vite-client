@@ -6,10 +6,10 @@ import {
   Plus,
 
 } from "lucide-react"
-import { Link, useLocation, useParams } from "@tanstack/react-router";
+import { Link, useParams } from "@tanstack/react-router";
 
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./ui/dialog";
-import { buttonVariants } from "./ui/button";
+
 
 import CreateProjectFrom from "./project/create-project-form";
 import {
@@ -28,8 +28,8 @@ import { workspaceProjectsQueryOptions } from "@/hooks/use-project";
 
 export function NavProjects() {
 
-  const { pathname } = useLocation()
-  const { workspace_id } = useParams({ strict: false })
+
+  const { workspace_id, project_id } = useParams({ strict: false })
   const [createProjectOpen, setCreateProjectOpen] = React.useState<boolean>(false)
   const { data: projects } = useSuspenseQuery(workspaceProjectsQueryOptions(workspace_id as string))
 
@@ -57,7 +57,7 @@ export function NavProjects() {
           <SidebarMenuItem key={item.name}>
             <SidebarMenuButton asChild>
               <Link activeProps={{ className: 'bg-white text-neutral-900' }} to={'/$workspace_id/projects/$project_id'} params={{ project_id: item.id, workspace_id: workspace_id as string }}>
-                <Folder className={cn(`${item.id}` === pathname ? 'stroke-primary' : 'stroke-neutral-400')} />
+                <Folder className={cn(`${item.id}` === project_id ? 'stroke-primary' : 'stroke-neutral-400')} />
                 <span>{item.name}</span>
               </Link>
             </SidebarMenuButton>

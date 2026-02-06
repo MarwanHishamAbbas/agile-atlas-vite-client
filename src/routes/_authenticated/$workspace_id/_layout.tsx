@@ -9,13 +9,13 @@ import {
     SidebarProvider,
     SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { userWorkspacesQueryOptions } from '@/hooks/use-workspace'
+import { currentWorkspaceQueryOptions, userWorkspacesQueryOptions, workspaceMembersQueryOptions } from '@/hooks/use-workspace'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { workspaceProjectsQueryOptions } from '@/hooks/use-project'
 
 
-export const Route = createFileRoute('/_authenticated/_layout')({
+export const Route = createFileRoute('/_authenticated/$workspace_id/_layout')({
 
     beforeLoad: async ({ context, params }) => {
         const { queryClient } = context
@@ -31,26 +31,21 @@ export const Route = createFileRoute('/_authenticated/_layout')({
             return
         }
     },
-    loader: async ({ context, params }) => {
+    loader: async ({ params, context }) => {
         const { queryClient } = context
+        const { data } = await queryClient.ensureQueryData(currentWorkspaceQueryOptions(params.workspace_id))
+        queryClient.prefetchQuery(workspaceMembersQueryOptions(params.workspace_id))
+        queryClient.prefetchQuery(workspaceProjectsQueryOptions(params.workspace_id))
+        return { currentWorkspace: data }
 
-        try {
-            await queryClient.ensureQueryData(userWorkspacesQueryOptions)
-
-
-        } catch (error) {
-            throw redirect({
-                to: '/login',
-            })
-        }
     },
 
-    component: AuthLayout,
+    component: Layout,
 
 
 })
 
-function AuthLayout() {
+function Layout() {
 
 
 

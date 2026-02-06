@@ -1,36 +1,13 @@
 import { createFileRoute, getRouteApi, redirect } from '@tanstack/react-router'
 import { Plus } from 'lucide-react'
 import { Suspense } from 'react'
-import { currentWorkspaceQueryOptions, userWorkspacesQueryOptions, workspaceMembersQueryOptions } from '@/hooks/use-workspace'
 import { Button } from '@/components/ui/button'
 import WorkspaceMembersWidget from '@/components/workspace/workspace-members'
 import { Spinner } from '@/components/ui/spinner'
-import { workspaceProjectsQueryOptions } from '@/hooks/use-project'
 
 
-export const Route = createFileRoute('/_authenticated/_layout/$workspace_id/dashboard')({
+export const Route = createFileRoute('/_authenticated/$workspace_id/_layout/dashboard')({
     component: RouteComponent,
-    beforeLoad: async ({ context }) => {
-        try {
-
-        } catch (error) {
-            const { data } = await context.queryClient.ensureQueryData(userWorkspacesQueryOptions)
-            throw redirect({ to: '/$workspace_id/dashboard', params: { workspace_id: data.workspaces[0].id } })
-        }
-    },
-    loader: async ({ params, context }) => {
-        const { queryClient } = context
-        const { data } = await queryClient.ensureQueryData(currentWorkspaceQueryOptions(params.workspace_id))
-        queryClient.prefetchQuery(workspaceMembersQueryOptions(params.workspace_id))
-        queryClient.prefetchQuery(workspaceProjectsQueryOptions(params.workspace_id))
-        return { currentWorkspace: data }
-    },
-    notFoundComponent: () => {
-        return (
-            <h1>Not Marwan</h1>
-        )
-    },
-
 })
 
 function RouteComponent() {

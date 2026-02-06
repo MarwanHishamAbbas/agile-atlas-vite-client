@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input'
 import { Tabs, TabsList, TabsPanel, TabsTab } from "@/components/ui/tabs"
 
 export const Route = createFileRoute(
-  '/_authenticated/_layout/$workspace_id/projects/$project_id',
+  '/_authenticated/$workspace_id/_layout/projects/$project_id',
 )({
   component: RouteComponent,
 })
