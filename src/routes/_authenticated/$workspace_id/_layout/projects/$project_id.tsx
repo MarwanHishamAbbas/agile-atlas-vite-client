@@ -3,6 +3,7 @@ import { CalendarRange, ChartGantt, Filter, LayoutPanelLeft, List, PenLine, Plus
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Tabs, TabsList, TabsPanel, TabsTab } from "@/components/ui/tabs"
+import Board from '@/components/project/kanban/board'
 
 export const Route = createFileRoute(
   '/_authenticated/$workspace_id/_layout/projects/$project_id',
@@ -41,8 +42,8 @@ function RouteComponent() {
             </Button>
           </div>
         </div>
-        <div className='mt-20'>
-          <TabsPanel value="board"><LayoutPanelLeft />Board</TabsPanel>
+        <div className='mt-12'>
+          <TabsPanel value="board"><Board /></TabsPanel>
           <TabsPanel value="list"><List />List</TabsPanel>
           <TabsPanel value="calendar"><CalendarRange />Calendar</TabsPanel>
           <TabsPanel value="timeline"><ChartGantt />Timeline</TabsPanel>
