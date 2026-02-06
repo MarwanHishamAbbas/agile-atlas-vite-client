@@ -25,7 +25,7 @@ function RouteComponent() {
                 <Suspense fallback={<Spinner />}>
                     <WorkspaceMembersWidget params={workspace_id} />
                 </Suspense>
-                <Button size={'sm'}> <Plus /> Invite Teammate</Button>
+                <Button > <Plus /> Invite Teammate</Button>
             </div>
         </div>
     )

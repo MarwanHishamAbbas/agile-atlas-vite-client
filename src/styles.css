@@ -126,7 +126,7 @@ code {
   --muted: var(--neutral-100);
   --muted-foreground: var(--neutral-500);
 
-  --accent: var(--primary-100);
+  --accent: var(--neutral-100);
   --accent-foreground: var(--primary-800);
 
   --destructive: var(--red-500);

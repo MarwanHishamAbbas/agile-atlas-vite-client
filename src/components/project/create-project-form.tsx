@@ -54,10 +54,10 @@ const CreateProjectFrom: FC<CreateProjectFromProps> = ({ setCreateProjectOpen })
                     {(field) => <field.TextArea rows={10} label='Description (Optional)' placeholder="Add description" />}
                 </form.AppField>
                 <div className='space-x-2 text-right'>
-                    <Button type='button' onClick={() => setCreateProjectOpen?.(false)} size={"sm"} variant={'outline'}>Discard</Button>
+                    <Button type='button' onClick={() => setCreateProjectOpen?.(false)} variant={'outline'}>Discard</Button>
                     <form.AppForm>
                         <form.SubscribeButton
-                            className={buttonVariants({ size: "sm" })}
+                            className={buttonVariants()}
                             isLoading={createProject.isPending}
                             label="Continue"
                         />

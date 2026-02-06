@@ -19,7 +19,7 @@ function RouteComponent() {
           <h4>Frontend</h4>
           <Button variant={'ghost'} size={"icon-lg"}><PenLine /> </Button>
         </div>
-        <Button size={'sm'} variant={'outline'}><Share className='size-3.5' /> Share</Button>
+        <Button variant={'outline'}><Share className='size-3.5' /> Share</Button>
       </div>
       <Tabs defaultValue="board">
         <div className='flex items-center justify-between max-xl:flex-col'>
@@ -31,11 +31,11 @@ function RouteComponent() {
           </TabsList>
           <div className='flex items-center gap-2 '>
             <Input placeholder='Search' className='min-w-96 max-lg:max-w-32 h-8 rounded-lg' />
-            <Button variant={"outline"} size={'sm'} >
+            <Button variant={"outline"} >
               <Filter />
               Filter
             </Button>
-            <Button size={'sm'}>
+            <Button>
               <Plus />
               New Task
             </Button>

@@ -1,7 +1,9 @@
 
 
 import { Link, useLocation } from "@tanstack/react-router";
+import { buttonVariants } from "./ui/button";
 import type { LucideIcon } from "lucide-react";
+
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -29,7 +31,7 @@ export function NavMenu({
         {items.map((item) => (
           <SidebarMenuItem key={item.name}>
             <SidebarMenuButton asChild>
-              <Link activeProps={{ className: 'bg-white text-neutral-900' }} to={item.url}>
+              <Link activeProps={{ className: 'bg-white text-neutral-900' }} className={buttonVariants({ variant: "ghost", className: "justify-start font-normal" })} to={item.url}>
                 <item.icon className={cn(item.url === pathname ? 'stroke-primary' : 'stroke-neutral-400')} />
                 <span>{item.name}</span>
               </Link>

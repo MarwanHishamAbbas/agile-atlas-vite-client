@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./ui/dialog";
 
 
 import CreateProjectFrom from "./project/create-project-form";
+import { buttonVariants } from "./ui/button";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -56,7 +57,7 @@ export function NavProjects() {
         {projects.data.map((item) => (
           <SidebarMenuItem key={item.name}>
             <SidebarMenuButton asChild>
-              <Link activeProps={{ className: 'bg-white text-neutral-900' }} to={'/$workspace_id/projects/$project_id'} params={{ project_id: item.id, workspace_id: workspace_id as string }}>
+              <Link activeProps={{ className: 'bg-white text-neutral-900' }} className={buttonVariants({ variant: "ghost", className: "justify-start font-normal" })} to={'/$workspace_id/projects/$project_id'} params={{ project_id: item.id, workspace_id: workspace_id as string }}>
                 <Folder className={cn(`${item.id}` === project_id ? 'stroke-primary' : 'stroke-neutral-400')} />
                 <span>{item.name}</span>
               </Link>

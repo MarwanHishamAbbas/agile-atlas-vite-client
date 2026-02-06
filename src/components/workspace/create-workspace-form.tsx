@@ -55,6 +55,7 @@ const CreateWorkspaceForm: FC<CreateWorkspaceFormProps> = ({ setCreateWorkspaceO
                         isLoading={createWorkspace.isPending}
                         label="Create Workspace"
                         className="w-full"
+
                     />
                 </form.AppForm>
             </form>

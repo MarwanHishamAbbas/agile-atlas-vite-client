@@ -99,7 +99,7 @@ export function WorkspaceSwitcher({ workspace_id }: { workspace_id: string | und
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild className="gap-2 p-2 ">
               <Dialog open={createWorkspaceOpen} onOpenChange={setCreateWorkspaceOpen}>
-                <DialogTrigger className={buttonVariants({ className: 'w-full justify-start', variant: "ghost" })}>
+                <DialogTrigger className={buttonVariants({ className: 'w-full justify-start', variant: "ghost", size: "lg" })}>
                   <div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
                     <Plus className="size-4" />
                   </div>
