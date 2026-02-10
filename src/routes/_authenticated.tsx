@@ -6,7 +6,7 @@ import { Outlet, createFileRoute, redirect } from '@tanstack/react-router'
 import { sessionQueryOptions } from '@/hooks/use-auth'
 
 export const Route = createFileRoute('/_authenticated')({
-  beforeLoad: async ({ context, params }) => {
+  beforeLoad: async ({ context }) => {
     const { queryClient } = context
 
     try {

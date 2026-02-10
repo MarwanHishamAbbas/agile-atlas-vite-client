@@ -33,10 +33,9 @@ export const Route = createFileRoute('/_authenticated/$workspace_id/_layout')({
     },
     loader: async ({ params, context }) => {
         const { queryClient } = context
-        const { data } = await queryClient.ensureQueryData(currentWorkspaceQueryOptions(params.workspace_id))
+        await queryClient.ensureQueryData(currentWorkspaceQueryOptions(params.workspace_id))
         queryClient.prefetchQuery(workspaceMembersQueryOptions(params.workspace_id))
         queryClient.prefetchQuery(workspaceProjectsQueryOptions(params.workspace_id))
-        return { currentWorkspace: data }
 
     },
 

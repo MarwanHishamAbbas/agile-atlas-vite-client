@@ -8,8 +8,8 @@ type BoardProps = {
 }
 
 const Board: FC<BoardProps> = () => {
-    return <main className='flex items-start overflow-x-scroll gap-4'>
-        <Card className='bg-neutral-50 shrink-0'>
+    return <main className='flex items-start overflow-x-scroll 2xl:[&::-webkit-scrollbar]:hidden  gap-4'>
+        <Card className='bg-neutral-50 shrink-0 min-w-87.5'>
             <CardHeader className='flex items-center justify-between'>
                 <CardTitle>To Do</CardTitle>
                 <div className='flex items-center gap-2'>
@@ -24,7 +24,7 @@ const Board: FC<BoardProps> = () => {
 
             </CardPanel>
         </Card>
-        <Card className='bg-neutral-50 shrink-0'>
+        <Card className='bg-neutral-50 shrink-0 min-w-87.5'>
             <CardHeader className='flex items-center justify-between'>
                 <CardTitle>On Progress</CardTitle>
                 <div className='flex items-center gap-2'>
@@ -39,7 +39,7 @@ const Board: FC<BoardProps> = () => {
 
             </CardPanel>
         </Card>
-        <Card className='bg-neutral-50 shrink-0'>
+        <Card className='bg-neutral-50 shrink-0 min-w-87.5'>
             <CardHeader className='flex items-center justify-between'>
                 <CardTitle>Review</CardTitle>
                 <div className='flex items-center gap-2'>
@@ -54,7 +54,7 @@ const Board: FC<BoardProps> = () => {
 
             </CardPanel>
         </Card>
-        <Card className='bg-neutral-50 shrink-0'>
+        <Card className='bg-neutral-50 shrink-0 min-w-87.5'>
             <CardHeader className='flex items-center justify-between'>
                 <CardTitle>Done</CardTitle>
                 <div className='flex items-center gap-2'>

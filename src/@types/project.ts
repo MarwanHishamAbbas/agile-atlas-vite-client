@@ -6,7 +6,18 @@ export interface Project {
   created_by: string
   created_at: Date
   updated_at: Date
-  archived_at: Date | null
+}
+
+export interface GetProjectRequest {
+  workspace_id: string
+  project_id: string
+}
+
+export interface ProjectWithWorkspace extends Omit<Project, 'workspace_id'> {
+  workspace: {
+    id: string
+    name: string
+  }
 }
 
 export interface CreateProjectDTO {
