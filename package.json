@@ -36,6 +36,7 @@
     "@tanstack/react-query-devtools": "^5.84.2",
     "@tanstack/react-router": "^1.132.0",
     "@tanstack/react-router-devtools": "^1.132.0",
+    "@tanstack/react-table": "^8.21.3",
     "@tanstack/router-plugin": "^1.132.0",
     "axios": "^1.13.2",
     "class-variance-authority": "^0.7.1",
@@ -70,5 +71,5 @@
     "vitest": "^3.0.5",
     "web-vitals": "^5.1.0"
   },
-  "packageManager": "pnpm@10.8.0"
+  "packageManager": "pnpm@10.29.3+sha512.498e1fb4cca5aa06c1dcf2611e6fafc50972ffe7189998c409e90de74566444298ffe43e6cd2acdc775ba1aa7cc5e092a8b7054c811ba8c5770f84693d33d2dc"
 }
