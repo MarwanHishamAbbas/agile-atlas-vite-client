@@ -4,9 +4,10 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Tabs, TabsList, TabsPanel, TabsTab } from "@/components/ui/tabs"
-import Board from '@/components/project/kanban/board'
+
 import { getProjectQueryOptions } from '@/hooks/use-project'
 import ProjectTitleForm from '@/components/project/project-title-form'
+import TasksList from '@/components/project/list/tasks-list'
 
 export const Route = createFileRoute(
   '/_authenticated/$workspace_id/_layout/projects/$project_id',
@@ -15,9 +16,6 @@ export const Route = createFileRoute(
     const { queryClient } = ctx.context
     const { project_id, workspace_id } = ctx.params
     await queryClient.ensureQueryData(getProjectQueryOptions(workspace_id, project_id))
-
-
-
   },
   component: RouteComponent,
 })
@@ -32,10 +30,9 @@ function RouteComponent() {
   return (
     <div className='space-y-6'>
       <ProjectTitleForm name={data.data.name} />
-      <Tabs defaultValue="board">
+      <Tabs defaultValue="list">
         <div className='flex items-center justify-between max-xl:flex-col'>
           <TabsList>
-            <TabsTab value="board"><LayoutPanelLeft />Board</TabsTab>
             <TabsTab value="list"><List />List</TabsTab>
             <TabsTab value="calendar"><CalendarRange />Calendar</TabsTab>
             <TabsTab value="timeline"><ChartGantt />Timeline</TabsTab>
@@ -53,8 +50,7 @@ function RouteComponent() {
           </div>
         </div>
         <div className='mt-5'>
-          <TabsPanel value="board"><Board /></TabsPanel>
-          <TabsPanel value="list"><List />List</TabsPanel>
+          <TabsPanel value="list"><List /><TasksList /></TabsPanel>
           <TabsPanel value="calendar"><CalendarRange />Calendar</TabsPanel>
           <TabsPanel value="timeline"><ChartGantt />Timeline</TabsPanel>
         </div>
